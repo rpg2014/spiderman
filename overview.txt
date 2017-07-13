@@ -1,0 +1,6 @@
+have a main that starts the http server
+have dynamo wrapper that encrypts the names a map of the connections
+have an s3 wrapper that grabs the joke / quote file (optional)
+have http server listening for posts
+    parses the post and determins if it is a command
+        if command  run command that it is (reflection?)
