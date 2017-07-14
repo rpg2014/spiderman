@@ -16,3 +16,4 @@ test-classpath.txt
 javaconfig.json
 .classpath
 .vscode/
+.env

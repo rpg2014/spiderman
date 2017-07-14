@@ -1,6 +1,15 @@
 have a main that starts the http server
 have dynamo wrapper that encrypts the names a map of the connections
+    have it load the connects on load / then write the connections as it closes (maybe/ depends on if heroku gives up a signal when sleeping)
+        (but then we would be stateful.  that might not work)
+        store vertices that contain a list of edges 
+
+
 have an s3 wrapper that grabs the joke / quote file (optional)
 have http server listening for posts
     parses the post and determins if it is a command
         if command  run command that it is (reflection?)
+
+
+write bash build script to grab new .jar file name and autogen the Proc file.
+set up .env
