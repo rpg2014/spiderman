@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency* 
+web: java -jar target/spiderman-0.1.jar 
