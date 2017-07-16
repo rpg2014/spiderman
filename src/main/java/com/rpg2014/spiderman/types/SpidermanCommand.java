@@ -4,7 +4,8 @@ public enum SpidermanCommand{
     VIEW(1,"view"),
     ADD(2,"add"),
     REMOVE(2,"remove"),
-    REMOVE_PERSONS(1,"removePersons"),
+    REMOVE_PERSON(1,"removePersons"),
+    DAD_JOKE(1,"dadJoke"),
     CREATE(1,"create");
 
 

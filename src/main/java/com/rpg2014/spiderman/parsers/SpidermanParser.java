@@ -30,6 +30,7 @@ public class SpidermanParser{
         
         List<String> argList = new ArrayList<>();
         //removes the : + replaces spaces with underscore
+        System.out.println("commandArray=" + commandArr[0].toUpperCase().replace(":", "").trim().replaceAll(" ", "_"));
         SpidermanCommand command = parseCommand(commandArr[0].toUpperCase().replace(":", "").trim().replaceAll(" ", "_"));
         String[] args = commandArr[1].split(",");
         logger.logInfo("args = " + commandArr[1], SpidermanParser.class.getSimpleName());

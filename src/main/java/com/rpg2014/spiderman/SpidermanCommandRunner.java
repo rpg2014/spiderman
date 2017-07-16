@@ -1,10 +1,20 @@
 package com.rpg2014.spiderman;
 
 import java.util.Map;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.Raster;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +55,47 @@ public class SpidermanCommandRunner {
 			response = SpidermanCommandRunner.add(personToRemoveFrom, connectionToRemove);
 			response = SpidermanCommandRunner.remove(personToRemoveFrom, connectionToRemove);
 			break;
-		case REMOVE_PERSONS:
+		case REMOVE_PERSON:
 			// this puts the first name as the person , then the rest are new connections
 			// for that person.
 			response = SpidermanCommandRunner.removePersons(commandEntry.getValue());
 			break;
+		case DAD_JOKE:
+			response = getDadJoke();
+			break;
+		default:
+			response = getDefaultResponse();
+			break;
 		}
 
 		return response;
+	}
+	
+	
+	public static GroupMeResponse getDadJoke() {
+		HttpGet get = new HttpGet("https://icanhazdadjoke.com/");
+		get.addHeader("Accept", "text/plain");
+		get.addHeader("User-Agent","GroupMeBot Dad joke getter");
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		CloseableHttpResponse httpResponse= null;
+		GroupMeResponse response = new GroupMeResponse("Unable to download dad joke.");
+		try {
+			httpResponse = httpclient.execute(get);
+			HttpEntity entity = httpResponse.getEntity();
+			OutputStream os = new ByteArrayOutputStream();
+			entity.writeTo(os);
+			response = new GroupMeResponse(os.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.logError("unable to fetch dad joke: "+e.getMessage(), className);
+		}
+		
+		return response;
+	}
+	
+	
+	public static GroupMeResponse getDefaultResponse() {
+		return new GroupMeResponse("Not a valid command");
 	}
 
 	public static GroupMeResponse create(final List<String> namesToCreate) {
