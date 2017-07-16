@@ -25,20 +25,14 @@ public class Spiderman{
         try{
 
             boolean onHeroku = Boolean.valueOf(System.getenv("ON_HEROKU"));
-<<<<<<< HEAD
-            int portNum = 5000;
-            logger.logInfo("port env? "+System.getenv("PORT"),className);
-            if(onHeroku){
-                portNum = Integer.valueOf(System.getenv("PORT"));
-=======
-            
+
             int portNum;
             if(onHeroku){
                 portNum = Integer.valueOf(System.getenv("PORT"));
             }else {
             	
                 portNum = 5000;
->>>>>>> most funcitonallity implemented + pushed for testing
+
             }
 
             logger.logInfo("Starting Http server on port "+portNum,className);
