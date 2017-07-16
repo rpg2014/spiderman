@@ -59,7 +59,7 @@ public class SpidermanDynamoWrapper {
 	
 	private SpidermanDynamoWrapper(){
 		if(Boolean.valueOf(System.getenv("ON_HEROKU")))
-			client = AmazonDynamoDBClientBuilder.standard().withCredentials(getCredentials()).build();
+			client = AmazonDynamoDBClientBuilder.standard().withCredentials(getCredentials()).withRegion(Regions.US_EAST_1).build();
 		else
 			client =AmazonDynamoDBClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
 
