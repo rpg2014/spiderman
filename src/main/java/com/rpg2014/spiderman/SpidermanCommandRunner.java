@@ -7,6 +7,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -85,6 +86,8 @@ public class SpidermanCommandRunner {
 			OutputStream os = new ByteArrayOutputStream();
 			entity.writeTo(os);
 			response = new GroupMeResponse(os.toString());
+			EntityUtils.consume(entity);
+			httpclient.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.logError("unable to fetch dad joke: "+e.getMessage(), className);

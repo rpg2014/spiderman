@@ -113,7 +113,7 @@ public class SpidermanHandler implements HttpHandler {
 		// commandEntry.getKey().toString(),
 		// commandEntry.getValue().toString()), className);
 		GroupMeResponse gmResponse = SpidermanCommandRunner.runCommand(commandEntry);
-		System.out.println("gmresponse text = " + gmResponse.getText());
+		
 		// if(gmResponse.isImageResponse()){
 		// do stuff for uploading an img
 		// }
@@ -143,7 +143,7 @@ public class SpidermanHandler implements HttpHandler {
 		nameValuePair.add(new BasicNameValuePair("text", response.getText()));
 		logger.logDebug("response bod_id=" + response.getBotID(), className);
 		nameValuePair.add(new BasicNameValuePair("bot_id", response.getBotID()));
-		System.out.println(nameValuePair.toString());
+		
 		CloseableHttpResponse httpResponse = null;
 		try {
 
@@ -201,7 +201,7 @@ public class SpidermanHandler implements HttpHandler {
 		
 		//getting url from response;
 		JSONObject obj = new JSONObject(os.toString());;
-		System.out.println(obj.toString());
+		
 		JSONObject payload = obj.getJSONObject("payload");
 		String url = payload.getString("picture_url");
 		
