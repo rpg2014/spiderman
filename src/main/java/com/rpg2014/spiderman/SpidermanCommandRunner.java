@@ -51,7 +51,6 @@ public class SpidermanCommandRunner {
 			List<String> connectionToRemove = commandEntry.getValue();
 			String personToRemoveFrom = commandEntry.getValue().get(0);
 			connectionToRemove.remove(0);
-			response = SpidermanCommandRunner.add(personToRemoveFrom, connectionToRemove);
 			response = SpidermanCommandRunner.remove(personToRemoveFrom, connectionToRemove);
 			break;
 		case REMOVE_PERSON:
