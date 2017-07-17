@@ -6,6 +6,7 @@ public enum SpidermanCommand{
     REMOVE(2,"remove"),
     REMOVE_PERSON(1,"removePersons"),
     DAD_JOKE(1,"dadJoke"),
+    JOKE(2,"nameJoke"),
     CREATE(1,"create");
 
 

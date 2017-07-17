@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
@@ -38,7 +39,7 @@ public class SpidermanCommandRunner {
 		GroupMeResponse response = null;
 		switch (commandEntry.getKey()) {
 		case VIEW:
-			 response = SpidermanCommandRunner.view(commandEntry.getValue());
+			response = SpidermanCommandRunner.view(commandEntry.getValue());
 			break;
 		case ADD:
 			List<String> connectionsToAdd = commandEntry.getValue();
@@ -64,6 +65,17 @@ public class SpidermanCommandRunner {
 		case DAD_JOKE:
 			response = getDadJoke();
 			break;
+		case JOKE:
+			if (commandEntry.getValue().size() > 2) {
+				response = new GroupMeResponse("Joke only takes 2 args");
+			} else if (commandEntry.getValue().size() == 2) {
+				response = getChuckJoke(commandEntry.getValue().get(0), commandEntry.getValue().get(1));
+			}else if (commandEntry.getValue().size() == 1) {
+				response = getChuckJoke(commandEntry.getValue().get(0), null);
+			}else if (commandEntry.getValue().isEmpty()) {
+				response = getChuckJoke();
+			}
+			break;
 		default:
 			response = getDefaultResponse();
 			break;
@@ -72,13 +84,50 @@ public class SpidermanCommandRunner {
 		return response;
 	}
 	
-	
+	public static GroupMeResponse getChuckJoke() {
+		return getChuckJoke(null,null);
+	}
+
+	public static GroupMeResponse getChuckJoke(final String firstName, final String lastName) {
+		String url = "http://api.icndb.com/jokes/random?escape=javascript";
+		if (firstName != null) {
+			url += "&firstName=" + firstName;
+			if (lastName != null) {
+				url += "&lastName=" + lastName;
+			}
+		}
+		System.out.println(url);
+		HttpGet get = new HttpGet(url);
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		CloseableHttpResponse httpResponse = null;
+		GroupMeResponse response = new GroupMeResponse("Unable to download joke.");
+		try {
+			httpResponse = httpclient.execute(get);
+			HttpEntity entity = httpResponse.getEntity();
+
+			OutputStream os = new ByteArrayOutputStream();
+			entity.writeTo(os);
+			
+			JSONObject json = new JSONObject(os.toString());
+			if (json.getString("type").equalsIgnoreCase("success")) {
+				response = new GroupMeResponse(json.getJSONObject("value").getString("joke"));
+			}
+			EntityUtils.consume(entity);
+			httpclient.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.logError("unable to fetch dad joke: " + e.getMessage(), className);
+		}
+
+		return response;
+	}
+
 	public static GroupMeResponse getDadJoke() {
 		HttpGet get = new HttpGet("https://icanhazdadjoke.com/");
 		get.addHeader("Accept", "text/plain");
-		get.addHeader("User-Agent","GroupMeBot Dad joke getter");
+		get.addHeader("User-Agent", "GroupMeBot Dad joke getter");
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		CloseableHttpResponse httpResponse= null;
+		CloseableHttpResponse httpResponse = null;
 		GroupMeResponse response = new GroupMeResponse("Unable to download dad joke.");
 		try {
 			httpResponse = httpclient.execute(get);
@@ -90,15 +139,15 @@ public class SpidermanCommandRunner {
 			httpclient.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.logError("unable to fetch dad joke: "+e.getMessage(), className);
+			logger.logError("unable to fetch dad joke: " + e.getMessage(), className);
 		}
-		
+
 		return response;
 	}
-	
-	
+
 	public static GroupMeResponse getDefaultResponse() {
-		return new GroupMeResponse("Not a valid command");
+		return new GroupMeResponse(
+				"Not a valid command.\nValid commands are: view, create, add, remove, remove person, dad joke.");
 	}
 
 	public static GroupMeResponse create(final List<String> namesToCreate) {
@@ -166,21 +215,20 @@ public class SpidermanCommandRunner {
 		return new GroupMeResponse(responseMessage);
 	}
 
-	 protected static GroupMeResponse view(List<String> namesToView) {
-		 GroupMeResponse response;
-		 if(namesToView.size()==1 && namesToView.get(0).equalsIgnoreCase("all")) {
-			 BufferedImage img = graphWrapper.viewAll();
-			 response = new GroupMeResponse("",img);
-		 }
-		 else {
-			 List<Person> peopleToView = new ArrayList<>();
-			 for (String s : namesToView) {
-				 peopleToView.add(new Person(s));
-			 }
-			 BufferedImage img = graphWrapper.view(peopleToView);
-			 response = new GroupMeResponse("",img);
-		 }
-		
-		 return response;
-	 }
+	protected static GroupMeResponse view(List<String> namesToView) {
+		GroupMeResponse response;
+		if (namesToView.size() == 1 && namesToView.get(0).equalsIgnoreCase("all")) {
+			BufferedImage img = graphWrapper.viewAll();
+			response = new GroupMeResponse("", img);
+		} else {
+			List<Person> peopleToView = new ArrayList<>();
+			for (String s : namesToView) {
+				peopleToView.add(new Person(s));
+			}
+			BufferedImage img = graphWrapper.view(peopleToView);
+			response = new GroupMeResponse("", img);
+		}
+
+		return response;
+	}
 }
