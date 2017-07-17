@@ -2,7 +2,7 @@ target/classes/
 target/dependency/
 target/maven-archiver/
 target/maven-status/
-target/
+target/*
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -11,6 +11,10 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+config.properties
+.settings/
+*.jpg
+shade.txt
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
@@ -21,4 +25,7 @@ javaconfig.json
 .classpath
 .vscode/
 .env
-shade.txt
+
+.access
+.botId
+target/*.jar
