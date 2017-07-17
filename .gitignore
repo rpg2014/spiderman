@@ -2,6 +2,7 @@ target/classes/
 target/dependency/
 target/maven-archiver/
 target/maven-status/
+target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -20,3 +21,4 @@ javaconfig.json
 .classpath
 .vscode/
 .env
+shade.txt

@@ -10,8 +10,6 @@ import com.rpg2014.spiderman.SpidermanCommandRunner;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import sun.net.www.http.HttpClient;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,7 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +25,6 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -36,22 +32,18 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-
-import java.text.MessageFormat;
 
 public class SpidermanHandler implements HttpHandler {
 	private SpidermanLogger logger = SpidermanLogger.getInstance();
 	private String className = SpidermanHandler.class.getSimpleName();
 	CloseableHttpClient httpclient = HttpClients.createDefault();
 
+	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
 
 		try {

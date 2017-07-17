@@ -22,6 +22,7 @@ public class Person{
 	
 	
 	
+	@Override
 	@SuppressWarnings("deprecation")
 	public String toString() {
 

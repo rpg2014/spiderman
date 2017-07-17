@@ -21,8 +21,6 @@ import org.json.JSONObject;
 
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 
-import java.time.LocalDate;
-
 public class GroupMeCallback{
     private SpidermanLogger logger = SpidermanLogger.getInstance();
     private static final String className = GroupMeCallback.class.getSimpleName();

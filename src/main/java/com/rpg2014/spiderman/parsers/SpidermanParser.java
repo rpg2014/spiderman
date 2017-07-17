@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.List;
 import java.util.AbstractMap;
 
-import com.rpg2014.spiderman.Spiderman;
 import com.rpg2014.spiderman.GroupMe.GroupMeCallback;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 import com.rpg2014.spiderman.types.SpidermanCommand;

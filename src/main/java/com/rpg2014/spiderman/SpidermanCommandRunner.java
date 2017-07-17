@@ -11,20 +11,17 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.Raster;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rpg2014.spiderman.types.*;
-
 import com.rpg2014.spiderman.wrapper.SpidermanGraphWrapper;
 import com.rpg2014.spiderman.GroupMe.GroupMeResponse;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
+import com.rpg2014.spiderman.types.Person;
+import com.rpg2014.spiderman.types.SpidermanCommand;
 
 public class SpidermanCommandRunner {
 	private static final String className = SpidermanCommandRunner.class.getSimpleName();

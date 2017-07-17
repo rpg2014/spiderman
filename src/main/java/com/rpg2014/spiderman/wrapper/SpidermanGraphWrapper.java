@@ -10,16 +10,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jgrapht.*;
+
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.layout.mxIGraphLayout;
-import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
+
+import org.jgrapht.UndirectedGraph;
 import org.jgrapht.ext.JGraphXAdapter;
 /**
  * @author rpg2014 make singleton make it so it downloads all the people from
@@ -126,7 +127,7 @@ public class SpidermanGraphWrapper {
 //		graphMx.setStylesheet(value);
 		
 		
-		mxIGraphLayout layout = new mxFastOrganicLayout(graphMx);
+		mxIGraphLayout layout = new mxOrganicLayout(graphMx);
 		
 		layout.execute(graphMx.getDefaultParent());
 
