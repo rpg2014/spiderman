@@ -160,7 +160,7 @@ public class SpidermanCommandRunner {
 
 	public static GroupMeResponse getDefaultResponse() {
 		return new GroupMeResponse(
-				"Not a valid command.\nValid commands are: view, create, add, remove, remove person, dad joke.");
+				"Not a valid command.\nValid commands are: view, create, add, remove, remove person, path and list.");
 	}
 
 	protected static GroupMeResponse path(final String startName, final String stopName) {
