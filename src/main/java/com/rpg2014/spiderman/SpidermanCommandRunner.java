@@ -58,6 +58,13 @@ public class SpidermanCommandRunner {
 			// for that person.
 			response = SpidermanCommandRunner.removePersons(commandEntry.getValue());
 			break;
+		case LIST:
+			if(commandEntry.getValue().size()==0) {
+				response = SpidermanCommandRunner.listAll();
+			}else {
+				response = SpidermanCommandRunner.list(commandEntry.getValue());
+			}
+			break;
 		case PATH:
 
 			if (commandEntry.getValue().size() != 2) {
@@ -222,6 +229,9 @@ public class SpidermanCommandRunner {
 		// might wanna throw a if around to see if it acutally uploads
 		graphWrapper.sync();
 
+		if (responseMessage.isEmpty()) {
+			responseMessage = "Person not found in database, check your commas and spellings";
+		}
 		return new GroupMeResponse(responseMessage);
 	}
 
@@ -240,5 +250,19 @@ public class SpidermanCommandRunner {
 		}
 
 		return response;
+	}
+	
+	protected static GroupMeResponse listAll() {
+		return new GroupMeResponse(graphWrapper.listAll());
+	}
+	protected static GroupMeResponse list(final List<String> namesToList) {
+		if(namesToList.get(0).equalsIgnoreCase("all")) {
+			return listAll();
+		}
+		StringBuilder builder = new StringBuilder();
+		for (String s : namesToList) {
+			builder.append(graphWrapper.list(new Person(s))+"\n");
+		}
+		return new GroupMeResponse(builder.toString().trim());
 	}
 }

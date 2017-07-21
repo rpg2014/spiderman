@@ -8,6 +8,7 @@ public enum SpidermanCommand{
     DAD_JOKE(1,"dadJoke"),
     JOKE(2,"nameJoke"),
     PATH(2,"path"),
+    LIST(2,"list"),
     CREATE(1,"create");
 
 

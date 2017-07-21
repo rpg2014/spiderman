@@ -6,8 +6,10 @@ import com.rpg2014.spiderman.types.Person;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -19,6 +21,8 @@ import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxStyleRegistry;
+import com.mxgraph.view.mxStylesheet;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.UndirectedGraph;
@@ -132,6 +136,32 @@ public class SpidermanGraphWrapper {
 		return generateImage(tempGraph);
 	}
 	
+	public String listAll() {
+		Set<String> allNames = graph.vertexSet();
+		StringBuilder builder = new StringBuilder();
+		builder.append("All names in database:\n");
+		for (String s: allNames) {
+			builder.append(s+", ");
+		}
+		return builder.toString().trim().substring(0, builder.toString().trim().length()-1); 
+	}
+	
+	public String list(final Person personToList) {
+		Set<DefaultEdge> edgeSet = graph.edgesOf(personToList.toString());
+		StringBuilder builder = new StringBuilder();
+		builder.append(personToList.toString()+" is connected to: ");
+		for(DefaultEdge e :edgeSet) {
+			String[] vertices = e.toString().replaceAll("\\(","").replaceAll("\\)","").split(":");
+			for (String s : vertices) {
+				
+				if(!s.trim().equalsIgnoreCase(personToList.toString())) {
+					builder.append(s.trim()+", ");
+				}
+			}
+		}
+		return builder.toString().trim().substring(0, builder.toString().trim().length()-1);
+	}
+	
 	protected BufferedImage generateImage(UndirectedGraph<String,DefaultEdge> graphToView) {
 		mxGraph graphMx = new JGraphXAdapter<String,DefaultEdge>(graphToView);
 		graphMx.setAlternateEdgeStyle(mxConstants.EDGESTYLE_ELBOW);
@@ -139,8 +169,22 @@ public class SpidermanGraphWrapper {
 		graphMx.setLabelsVisible(true);
 //		graphMx.setStylesheet(value);
 		
+		Map<String, Object> edgeStyle = new HashMap<String, Object>();
+		//edgeStyle.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ORTHOGONAL);
+		edgeStyle.put(mxConstants.STYLE_SHAPE,    mxConstants.SHAPE_CONNECTOR);
+		edgeStyle.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_BLOCK);
+		edgeStyle.put(mxConstants.STYLE_STARTARROW, mxConstants.ARROW_BLOCK);
+		edgeStyle.put(mxConstants.STYLE_STROKECOLOR, "gray");
+		edgeStyle.put(mxConstants.STYLE_FONTCOLOR, "black");
+		edgeStyle.put(mxConstants.STYLE_OVERFLOW, "hidden"); // change to fill next
+		edgeStyle.put(mxConstants.STYLE_FONTCOLOR, "gray");
 		
+		mxStylesheet stylesheet = new mxStylesheet();
+		stylesheet.setDefaultEdgeStyle(edgeStyle);
+		graphMx.setStylesheet(stylesheet);
+//		graphMx.setCellStyle("edgeStyle=entityRelationEdgeStyle");
 		mxIGraphLayout layout = new mxOrganicLayout(graphMx);
+		
 		
 		layout.execute(graphMx.getDefaultParent());
 
