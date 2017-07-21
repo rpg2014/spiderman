@@ -136,11 +136,19 @@ public class SpidermanGraphWrapper {
 		return generateImage(tempGraph);
 	}
 	
+	public static
+	<T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+  		List<T> list = new ArrayList<T>(c);
+  		Collections.sort(list);
+  		return list;
+	}
+	
 	public String listAll() {
 		Set<String> allNames = graph.vertexSet();
+		List<String> sortedNames = asSortedList(allNames);
 		StringBuilder builder = new StringBuilder();
 		builder.append("All names in database:\n");
-		for (String s: allNames) {
+		for (String s: sortedNames) {
 			builder.append(s+", ");
 		}
 		return builder.toString().trim().substring(0, builder.toString().trim().length()-1); 
