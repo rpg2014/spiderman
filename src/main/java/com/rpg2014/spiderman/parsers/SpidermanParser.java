@@ -27,7 +27,7 @@ public class SpidermanParser {
 		String[] commandArr = callback.getText().replace("@spiderman", "").trim().split(":");// );
 
 		// removes the : + replaces spaces with underscore
-		System.out.println("commandArray=" + commandArr[0].toUpperCase().replace(":", "").trim().replaceAll(" ", "_"));
+		
 		SpidermanCommand command = parseCommand(
 				commandArr[0].toUpperCase().replace(":", "").trim().replaceAll(" ", "_"));
 		List<String> argList = new ArrayList<>();

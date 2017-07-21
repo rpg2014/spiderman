@@ -20,7 +20,9 @@ import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 
+import org.jgrapht.GraphPath;
 import org.jgrapht.UndirectedGraph;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.ext.JGraphXAdapter;
 /**
  * @author rpg2014 make singleton make it so it downloads all the people from
@@ -101,6 +103,17 @@ public class SpidermanGraphWrapper {
 		
 		
 		return generateImage(this.graph);
+	}
+	
+	public String path(final Person startPerson, final Person stopPerson) {
+		GraphPath<String,DefaultEdge> path = DijkstraShortestPath.findPathBetween(graph, startPerson.toString(), stopPerson.toString());
+		path.getVertexList();
+		StringBuilder builder = new StringBuilder();
+		for(String p : path.getVertexList()) {
+			builder.append(p + " -> ");
+		}
+		String pathString = builder.toString().trim().substring(0, builder.toString().length()-3).trim();
+		return "Shortest path = [" + pathString +"]";
 	}
 	
 	

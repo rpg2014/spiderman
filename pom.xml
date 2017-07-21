@@ -67,7 +67,16 @@
 			<groupId>org.jgrapht</groupId>
 			<artifactId>jgrapht-ext</artifactId>
 			<version>1.0.1</version>
-		</dependency><!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht -->
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht</artifactId>
+			<version>1.0.1</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>

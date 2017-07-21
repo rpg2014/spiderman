@@ -58,6 +58,16 @@ public class SpidermanCommandRunner {
 			// for that person.
 			response = SpidermanCommandRunner.removePersons(commandEntry.getValue());
 			break;
+		case PATH:
+
+			if (commandEntry.getValue().size() != 2) {
+				response = new GroupMeResponse("Path requires 2 names");
+			} else {
+				String startName = commandEntry.getValue().get(0);
+				String stopName = commandEntry.getValue().get(1);
+				response = SpidermanCommandRunner.path(startName, stopName);
+			}
+			break;
 		case DAD_JOKE:
 			response = getDadJoke();
 			break;
@@ -66,9 +76,9 @@ public class SpidermanCommandRunner {
 				response = new GroupMeResponse("Joke only takes 2 args");
 			} else if (commandEntry.getValue().size() == 2) {
 				response = getChuckJoke(commandEntry.getValue().get(0), commandEntry.getValue().get(1));
-			}else if (commandEntry.getValue().size() == 1) {
+			} else if (commandEntry.getValue().size() == 1) {
 				response = getChuckJoke(commandEntry.getValue().get(0), null);
-			}else if (commandEntry.getValue().isEmpty()) {
+			} else if (commandEntry.getValue().isEmpty()) {
 				response = getChuckJoke();
 			}
 			break;
@@ -79,9 +89,9 @@ public class SpidermanCommandRunner {
 
 		return response;
 	}
-	
+
 	public static GroupMeResponse getChuckJoke() {
-		return getChuckJoke(null,null);
+		return getChuckJoke(null, null);
 	}
 
 	public static GroupMeResponse getChuckJoke(final String firstName, final String lastName) {
@@ -103,7 +113,7 @@ public class SpidermanCommandRunner {
 
 			OutputStream os = new ByteArrayOutputStream();
 			entity.writeTo(os);
-			
+
 			JSONObject json = new JSONObject(os.toString());
 			if (json.getString("type").equalsIgnoreCase("success")) {
 				response = new GroupMeResponse(json.getJSONObject("value").getString("joke"));
@@ -144,6 +154,10 @@ public class SpidermanCommandRunner {
 	public static GroupMeResponse getDefaultResponse() {
 		return new GroupMeResponse(
 				"Not a valid command.\nValid commands are: view, create, add, remove, remove person, dad joke.");
+	}
+
+	protected static GroupMeResponse path(final String startName, final String stopName) {
+		return new GroupMeResponse(graphWrapper.path(new Person(startName), new Person(stopName)));
 	}
 
 	public static GroupMeResponse create(final List<String> namesToCreate) {

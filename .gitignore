@@ -29,3 +29,4 @@ javaconfig.json
 .access
 .botId
 target/*.jar
+/target/
