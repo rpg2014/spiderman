@@ -180,8 +180,7 @@ public class SpidermanHandler implements HttpHandler {
 		
 		imgPost.addHeader("X-Access-Token", accessToken);
 		imgPost.addHeader("Content-Type", "image/jpeg");
-		System.out.println(imgPost.expectContinue());
-		System.out.println(imgPost.toString());
+		
 		
 		
 		CloseableHttpResponse httpResponse = httpclient.execute(imgPost);
