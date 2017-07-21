@@ -133,7 +133,7 @@ public class SpidermanHandler implements HttpHandler {
 		}
 		logger.logDebug("response text: " + response.getText(), className);
 		nameValuePair.add(new BasicNameValuePair("text", response.getText()));
-		logger.logDebug("response bod_id=" + response.getBotID(), className);
+		//logger.logDebug("response bod_id=" + response.getBotID(), className);
 		nameValuePair.add(new BasicNameValuePair("bot_id", response.getBotID()));
 		
 		CloseableHttpResponse httpResponse = null;
