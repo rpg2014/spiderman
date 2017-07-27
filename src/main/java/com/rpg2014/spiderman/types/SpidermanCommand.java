@@ -1,23 +1,27 @@
 package com.rpg2014.spiderman.types;
 
 public enum SpidermanCommand{
-    VIEW(1,"view"),
-    ADD(2,"add"),
-    REMOVE(2,"remove"),
-    REMOVE_PERSON(1,"removePersons"),
-    DAD_JOKE(1,"dadJoke"),
-    JOKE(2,"nameJoke"),
-    PATH(2,"path"),
-    LIST(2,"list"),
-    CREATE(1,"create");
+    VIEW(),
+    ADD(),
+    REMOVE(),
+    REMOVE_PERSON(),
+    DAD_JOKE(),
+    JOKE(),
+    PATH(),
+    LIST(),
+    SIZE(),
+    HELP(),
+    CREATE(),
+    ADD_QUOTE(),
+    QUOTE_PAGE(),
+    QUOTE();
 
 
 
     private int numArgs;
     private String commandTxt;
-    private SpidermanCommand(final int args,final String commandText){
-        this.numArgs = args;
-        this.commandTxt = commandText;
+    private SpidermanCommand(){
+        
     }
 
 

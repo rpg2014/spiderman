@@ -89,6 +89,7 @@ public class SpidermanHandler implements HttpHandler {
 
 			os.write(response.getBytes());
 			os.close();
+			this.doPost(new GroupMeResponse("Something Broke: "+e.getMessage()));
 			logger.logFatal("Expection: " + e.getMessage(), className);
 			e.printStackTrace();
 		}

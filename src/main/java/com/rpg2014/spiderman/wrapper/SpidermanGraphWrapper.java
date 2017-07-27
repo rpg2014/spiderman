@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,6 +39,7 @@ public class SpidermanGraphWrapper {
 	private UndirectedGraph<String, DefaultEdge> graph;
 	private SpidermanDynamoWrapper dynamoWrapper;
 	private static  SpidermanLogger logger = SpidermanLogger.getInstance();
+	private static final int NUM_PEOPLE_TO_RETURN_FOR_SIZE = 3;
 
 	private static class MyWrapper {
 		static SpidermanGraphWrapper INSTANCE = new SpidermanGraphWrapper();
@@ -172,6 +174,42 @@ public class SpidermanGraphWrapper {
 		return builder.toString().trim().substring(0, builder.toString().trim().length()-1);
 	}
 	
+	public String getTop3Connections() {
+		List<String> vertexSet = new ArrayList<>(graph.vertexSet());
+		List<String> top3 = new ArrayList<>();
+		//find the top 3 people with the largest number of connections.
+		for(int i=1;i<=NUM_PEOPLE_TO_RETURN_FOR_SIZE;i++) {
+			String largest = "Morgan T";
+			for (String s: vertexSet) {
+				if(graph.degreeOf(s)>graph.degreeOf(largest)) {
+					logger.logDebug(s+" > "+largest, this.getClass().getSimpleName());
+					largest = s;
+					
+				}
+			}
+			top3.add(largest);
+			vertexSet.remove(largest);
+			
+		}
+		StringBuilder response = new StringBuilder();
+		int i = 1;
+		for(String s: top3) {
+			response.append(i+":    "+s+"  |  "+graph.degreeOf(s)+"\n");
+			i++;
+		}
+		return response.toString().trim();
+		
+	}
+	
+	public String sizeOf(final List<Person> peopleToGetSizeOf) {
+		StringBuilder response = new StringBuilder();
+		int i = 0;
+		for(Person s: peopleToGetSizeOf) {
+			response.append(s.toString()+" is connected to "+graph.degreeOf(s.toString())+" people\n");
+		}
+		return response.toString().trim();
+	}
+	
 	protected BufferedImage generateImage(UndirectedGraph<String,DefaultEdge> graphToView) {
 		mxGraph graphMx = new JGraphXAdapter<String,DefaultEdge>(graphToView);
 		graphMx.setAlternateEdgeStyle(mxConstants.EDGESTYLE_ELBOW);
@@ -206,6 +244,11 @@ public class SpidermanGraphWrapper {
 		
 //		dynamoWrapper.putPeople(graph.vertexSet());
 		return dynamoWrapper.putEdges(graph.edgeSet());
+	}
+	public String getRandomPerson() {
+		List<String> vertexList = new ArrayList<>(graph.vertexSet());
+		Random rand = new Random();
+		return vertexList.get(rand.nextInt(vertexList.size()));
 	}
 	public UndirectedGraph<String,DefaultEdge> getGraph(){
 		return graph;

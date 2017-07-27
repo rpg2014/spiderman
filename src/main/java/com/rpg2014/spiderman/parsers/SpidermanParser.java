@@ -16,10 +16,13 @@ public class SpidermanParser {
 	public static SpidermanCommand parseCommand(final String commandString) {
 
 		SpidermanCommand retCommand = null;
-
+		try {
 		retCommand = SpidermanCommand.valueOf(commandString);
+		}catch (IllegalArgumentException e) {
+			retCommand = SpidermanCommand.HELP;
+		}
 		logger.logInfo("Found command: " + retCommand.name(), SpidermanParser.class.getSimpleName());
-
+		
 		return retCommand;
 	}
 

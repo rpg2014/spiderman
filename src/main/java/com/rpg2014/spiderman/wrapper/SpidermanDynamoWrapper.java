@@ -2,6 +2,7 @@ package com.rpg2014.spiderman.wrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jgrapht.graph.DefaultEdge;
@@ -25,7 +26,7 @@ public class SpidermanDynamoWrapper {
 	private DynamoDB dynamo;
 	private Table table;
 	private Item edges;
-	private Item people;
+	private Item quotes;
 	
 	public static SpidermanDynamoWrapper getInstance() {
 		
@@ -33,6 +34,21 @@ public class SpidermanDynamoWrapper {
 	}
 	
 	
+	public Map<String,List<String>> getQuotes(){
+		if (quotes==null) {
+			quotes = table.getItem("name","quotes");
+		}
+		return quotes.getMap("quotes");
+	}
+	public boolean putQuotes(final Map<String,List<String>> quoteMap) {
+		quotes.withMap("quotes", quoteMap);
+		PutItemOutcome outcome = table.putItem(quotes);
+		boolean success = false;
+		if(outcome.getPutItemResult().getSdkHttpMetadata().getHttpStatusCode()-200<100) {
+			success = true;
+		}
+		return success;
+	}
 	
 	public List<String> getEdges(){
 		return edges.getList("edgeList");
