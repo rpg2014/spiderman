@@ -46,8 +46,10 @@ public class SpidermanQuoteWrapper {
 
 		String retQuote = searchQuotes(quoteList, searchStr);
 		
-
-		return retQuote + "\n    -" + person.toString();
+		if(retQuote == null){
+			return "Unable to find a quote that contains " +searchStr+" by "+person.toString();
+		}else
+			return retQuote + "\n    -" + person.toString();
 
 	}
 
