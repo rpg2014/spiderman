@@ -22,6 +22,15 @@ public class SpidermanQuoteWrapper {
 		quoteMap = dynamoWrapper.getQuotes();
 		rand = new Random();
 	}
+	
+	public String getRandomQuote() {
+		List<Person> peopleList = new ArrayList<>();
+		for (Map.Entry<String, List<String>> entry:quoteMap.entrySet()) {
+			peopleList.add(new Person(entry.getKey()));
+		}
+		
+		return getRandomQuote(peopleList.get(rand.nextInt(peopleList.size())));
+	}
 
 	public String getRandomQuote(final Person person) {
 		List<String> quoteList = quoteMap.get(person.toString());

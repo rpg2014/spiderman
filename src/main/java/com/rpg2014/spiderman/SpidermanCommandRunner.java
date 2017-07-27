@@ -194,10 +194,10 @@ public class SpidermanCommandRunner {
 	}
 	
 	protected static GroupMeResponse getRandomQuote() {
-		lazyGraphWrapper();
+		
 		lazyQuoteWrapper();
-		String randPerson = graphWrapper.getRandomPerson();
-		return new GroupMeResponse(quoteWrapper.getRandomQuote(new Person(randPerson)));
+		
+		return new GroupMeResponse(quoteWrapper.getRandomQuote());
 	}
 	protected static GroupMeResponse getRandomQuote(final String person) {
 		lazyQuoteWrapper();
