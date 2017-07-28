@@ -162,7 +162,7 @@ public class Webpage {
 			"				</div>\n" + 
 			"			</form>\n" + 
 			"			<div class=\"table-responsive\">\n" + 
-			"				<table id=\"quotes\" class=\"table\">\n" + 
+			"				<table id=\"quotes\" class=\"table-responsive\">\n" + 
 			"					<thead>\n" + 
 			"						<tr class=\"header\">\n" + 
 			"							<th style=\"width: 15%;\">Name</th>\n" + 
