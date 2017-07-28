@@ -2,170 +2,180 @@
 
 <html>
 <head>
-    <title>Quotes</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Quotes</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css"/>
-    <link rel="stylesheet"
-          href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 
-    <script>
-    function searchAuthor() {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
+<script>
+	function searchAuthor() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("authorSearch");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("quotes");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+	
+	function searchQuote() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("quoteSearch");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("quotes");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[1];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+<style>
+tr.header {
+	cursor: pointer;
 }
-
-
-
-
-    </script>
-    <style>
-
-tr.header {cursor:pointer;}
 
 /* ---------------------- Content ---------------------- */
 [id^=quotes] {
-font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-border-collapse: collapse;
-width: 100%;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 [id^=quotes] td, [id^=quotes] th {
-border: 1px solid #ddd;
-padding: 8px;
+	border: 1px solid #ddd;
+	padding: 8px;
 }
 
-[id^=quotes] tr:nth-child(even){background-color: #a9cce3;}
+[id^=quotes] tr:nth-child(even) {
+	background-color: #a9cce3;
+}
 
-[id^=quotes] tr:hover {background-color: #e3c0a9;}
+[id^=quotes] tr:hover {
+	background-color: #e3c0a9;
+}
 
 [id^=quotes] th {
-padding-top: 12px;
-padding-bottom: 12px;
-text-align: left;
-background-color: #1b4f72;
-color: white;
-background-image: url(../../images/bg.gif);
-background-repeat:no-repeat;
-background-position:right center;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #1b4f72;
+	color: white;
+	background-repeat: no-repeat;
+	background-position: right center;
 }
 
-th.headerSortUp {
-background-image: url(../../images/asc.gif);
-background-repeat:no-repeat;
-background-position:right center;
-background-color: #3978cc;
-}
-
-th.headerSortDown {
-background-image: url(../../images/desc.gif);
-background-repeat:no-repeat;
-background-position:right center;
-background-color: #3978cc;
+.footer {
+	margin: auto;
+	text-align: center;
 }
 
 table {
-border-spacing: 5px;
+	border-spacing: 5px;
 }
+
 #authorSearch {
+	font-size: 12px;
+	padding: 5px 40px 5px 10px;
+	border: 1px solid #ddd;
+	margin-bottom: 5px;
+	-webkit-transition: width 0.4s ease-in-out;
+	transition: width 0.4s ease-in-out;
+	float: left;
+}
 
-    font-size: 12px;
-    padding: 5px 40px 5px 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-    float:left;
+#authorSearch:focus {
+	border: 5px solid #ddd
 }
-#authorSearch:focus{
-    border: 5px solid #ddd
-}
+
 #quoteSearch {
-
-    font-size: 12px;
-    padding: 5px 15px 5px 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-    float:left;
-}
-#quoteSearch:focus{
-    border: 5px solid #ddd
+	font-size: 12px;
+	padding: 5px 15px 5px 10px;
+	border: 1px solid #ddd;
+	margin-bottom: 5px;
+	-webkit-transition: width 0.4s ease-in-out;
+	transition: width 0.4s ease-in-out;
+	float: left;
 }
 
-@-moz-document url-prefix() {
-  fieldset { display: table-cell; }
+#quoteSearch:focus {
+	border: 5px solid #ddd
 }
 
-
-
-
-    </style>
+@
+-moz-document url-prefix () {fieldset {
+	display: table-cell;
+}
+}
+</style>
 
 </head>
 
 <body>
-<div class="container">
+	<div class="container">
 
-    <div class="row">
-        <h2>Quotes</h2>
-        <form class="form-inline">
-            <div class="form-group">
-                <input type="text" id="authorSearch" onkeyup="searchAuthor()" placeholder="Search for person.."
-                       title="Type in a name" >
-            </div>
-            <div class="form-group">
-                <input type="text" id="quoteSearch" onkeyup="searchQuote()" placeholder="Search for quote.."
-                       title="Type in a word" >
-            </div>
-        </form>
-        <div class="table-responsive">
-            <table id="quotes" class="table">
-                <thead>
-                <tr class="header">
-                    <th style="width:15%;">Name</th>
-                    <th style="width:85%;">Quote</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td valign="top">
-                        {0}
-                    </td>
-                    <td valign="top">
-                        {1}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+		<div class="row">
+			<h2>Quotes</h2>
+			<form class="form-inline">
+				<div class="form-group">
+					<input type="text" id="authorSearch" onkeyup="searchAuthor()"
+						placeholder="Search for person.." title="Type in a name">
+				</div>
+				<div class="form-group">
+					<input type="text" id="quoteSearch" onkeyup="searchQuote()"
+						placeholder="Search for quote.." title="Type in a word">
+				</div>
+			</form>
+			<div class="table-responsive">
+				<table id="quotes" class="table">
+					<thead>
+						<tr class="header">
+							<th style="width: 15%;">Name</th>
+							<th style="width: 85%;">Quote</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td valign="top">{0}</td>
+							<td valign="top">{1}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 
 
-    <div style="font-style: italic; clear: both;">
-        Schooner 2.0, msec-team@, w?Schooner_2.0
-    </div>
-</div>
+
+	</div>
+	<div class="footer" style="font-style: italic; clear: both;">Spiderman
+		2.0</div>
 </body>
 </html>

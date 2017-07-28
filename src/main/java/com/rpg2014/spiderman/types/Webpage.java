@@ -13,13 +13,13 @@ public class Webpage {
 			"\n" + 
 			"\n" + 
 			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css\">\n" + 
+			"	href=\"https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css\">\n" + 
 			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css\" />\n" + 
+			"	href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css\" />\n" + 
 			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"http://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css\" />\n" + 
+			"	href=\"https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css\" />\n" + 
 			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css\">\n" + 
+			"	href=\"https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css\">\n" + 
 			"<link rel=\"stylesheet\"\n" + 
 			"	href=\"https://fonts.googleapis.com/icon?family=Material+Icons\">\n" + 
 			"\n" + 
