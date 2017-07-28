@@ -14,7 +14,7 @@ public class SpidermanQuoteWrapper {
 	Random rand;
 	private SpidermanDynamoWrapper dynamoWrapper = SpidermanDynamoWrapper.getInstance();
 	private Map<String, List<String>> quoteMap;
-	private static final String URL = "https://obscure-inlet-41841.herokuapp.com/quotes?kee=";
+	
 
 
 	public static SpidermanQuoteWrapper getInstance() {
@@ -70,6 +70,12 @@ public class SpidermanQuoteWrapper {
 		}
 	}
 	public String getQuoteLink() {
+		String URL;
+		if(Boolean.valueOf(System.getenv("ON_HEROKU"))) {
+			URL = System.getenv("URL");
+		}else {
+			URL = "localhost:5000/quotes";
+		}
 		return URL + quoteMap.toString().hashCode();
 	}
 
