@@ -1,4 +1,4 @@
-package com.rpg2014.spiderman;
+package com.rpg2014.spiderman.handlers;
 
 
 import com.rpg2014.spiderman.GroupMe.GroupMeCallback;

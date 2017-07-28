@@ -1,5 +1,6 @@
 package com.rpg2014.spiderman.wrapper;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ public class SpidermanQuoteWrapper {
 	Random rand;
 	private SpidermanDynamoWrapper dynamoWrapper = SpidermanDynamoWrapper.getInstance();
 	private Map<String, List<String>> quoteMap;
+	private static final String URL = "https://obscure-inlet-41841.herokuapp.com/quotes?kee=";
+
 
 	public static SpidermanQuoteWrapper getInstance() {
 		return ourInstance;
@@ -66,9 +69,16 @@ public class SpidermanQuoteWrapper {
 			return "Unable to add quote";
 		}
 	}
+	public String getQuoteLink() {
+		return URL + quoteMap.toString().hashCode();
+	}
 
 	public boolean sync() {
 		return dynamoWrapper.putQuotes(quoteMap);
+	}
+	
+	public Map<String,List<String>> getQuoteMap(){
+		return quoteMap;
 	}
 
 	protected String searchQuotes(final List<String> quoteList, final String searchStr) {

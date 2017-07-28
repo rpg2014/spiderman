@@ -105,6 +105,9 @@ public class SpidermanCommandRunner {
 				response = addQuote(commandEntry.getValue().get(0),commandEntry.getValue().get(1));
 			}
 			break;
+		case QUOTE_LINK:
+			response = getQuoteLink();
+			break;
 		case DAD_JOKE:
 			response = getDadJoke();
 			break;
@@ -191,6 +194,11 @@ public class SpidermanCommandRunner {
 	public static GroupMeResponse getDefaultResponse() {
 		return new GroupMeResponse(
 				"Not a valid command.\nValid commands are: view, create, add, remove, remove person, path, size and list.");
+	}
+	
+	protected static GroupMeResponse getQuoteLink() {
+		lazyQuoteWrapper();
+		return new GroupMeResponse(quoteWrapper.getQuoteLink());
 	}
 	
 	protected static GroupMeResponse getRandomQuote() {
