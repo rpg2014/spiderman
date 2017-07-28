@@ -1,1 +1,1 @@
-web: java -jar target/spiderman-0.0.1-SNAPSHOT.jar
+web: java -jar target/spiderman-2.0rc.jar
