@@ -39,7 +39,7 @@ public class WebpageBuilder {
 		StringBuilder builder = new StringBuilder();
 		for(Map.Entry<String, List<String>> entry : entrySet) {
 			for(String s : entry.getValue()) {
-				builder.append(MessageFormat.format(tableRow, entry.getKey(),s));
+				builder.append(MessageFormat.format(tableRow, entry.getKey(),s.replaceAll("\n", "<br/>")));
 			}
 		}
 		return builder.toString();
