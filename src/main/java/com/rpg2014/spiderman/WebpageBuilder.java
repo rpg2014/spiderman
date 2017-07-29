@@ -11,7 +11,8 @@ import com.rpg2014.spiderman.wrapper.SpidermanQuoteWrapper;
 public class WebpageBuilder {
 	private static String htmlHead = Webpage.getHead();
 	private static String tableRow = Webpage.getTableRow();
-	private static String body = Webpage.getBody();
+	private static String body1 = Webpage.getBody1();
+	private static String body2 = Webpage.getBody2();
 	private static SpidermanQuoteWrapper quoteWrapper;
 	private static String webpage = null;
 
@@ -25,7 +26,10 @@ public class WebpageBuilder {
 	protected static String buildWebpage() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(htmlHead);
-		builder.append(MessageFormat.format(body, buildTableRows()));
+		builder.append(body1);
+		builder.append(buildTableRows());
+		builder.append(body2);
+		
 		return builder.toString();
 	}
 
@@ -39,5 +43,8 @@ public class WebpageBuilder {
 			}
 		}
 		return builder.toString();
+	}
+	public static void resetWebpage() {
+		webpage = null;
 	}
 }

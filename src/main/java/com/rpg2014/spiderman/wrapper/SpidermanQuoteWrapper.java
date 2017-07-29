@@ -55,6 +55,19 @@ public class SpidermanQuoteWrapper {
 			return retQuote + "\n    -" + person.toString();
 
 	}
+	
+	public String removeQuote(final Person person, final String quoteToRemove) {
+		List<String> listOfQuotes = quoteMap.get(person.toString());
+		String retString ="";
+		if(listOfQuotes.remove(quoteToRemove)) {
+			retString = "Quote removed Successfully";
+		}else {
+			retString = "Unable to remove Quote";
+		}
+		quoteMap.put(person.toString(), listOfQuotes);
+		this.sync();
+		return retString;
+	}
 
 	public String addQuote(final Person person, final String quote) {
 		List<String> quoteList = quoteMap.get(person.toString());

@@ -2,29 +2,21 @@ package com.rpg2014.spiderman.types;
 
 public class Webpage {
 	private static String head="<!DOCTYPE html>\n" + 
-			"\n" + 
-			"<html>\n" + 
-			"<head>\n" + 
-			"<title>Quotes</title>\n" + 
-			"<meta charset=\"utf-8\" />\n" + 
-			"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" + 
-			"<script\n" + 
-			"	src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n" + 
+			"<html><head>\n" + 
+			"    <title>Quotes</title>\n" + 
+			"    <meta charset=\"utf-8\">\n" + 
+			"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" + 
+			"    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n" + 
 			"\n" + 
 			"\n" + 
-			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css\">\n" + 
-			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css\" />\n" + 
-			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css\" />\n" + 
-			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css\">\n" + 
-			"<link rel=\"stylesheet\"\n" + 
-			"	href=\"https://fonts.googleapis.com/icon?family=Material+Icons\">\n" + 
+			"    <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css\">\n" + 
+			"    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css\">\n" + 
+			"    <link rel=\"stylesheet\" href=\"https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css\">\n" + 
+			"    <link rel=\"stylesheet\" href=\"https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css\">\n" + 
+			"    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/icon?family=Material+Icons\">\n" + 
 			"\n" + 
 			"\n" + 
-			"<script>\n" + 
+			"    <script>\n" + 
 			"	function searchAuthor() {\n" + 
 			"		var input, filter, table, tr, td, i;\n" + 
 			"		input = document.getElementById(\"authorSearch\");\n" + 
@@ -42,7 +34,7 @@ public class Webpage {
 			"			}\n" + 
 			"		}\n" + 
 			"	}\n" + 
-			"	\n" + 
+			"\n" + 
 			"	function searchQuote() {\n" + 
 			"		var input, filter, table, tr, td, i;\n" + 
 			"		input = document.getElementById(\"quoteSearch\");\n" + 
@@ -60,11 +52,19 @@ public class Webpage {
 			"			}\n" + 
 			"		}\n" + 
 			"	}\n" + 
+			"    // Get the modal\n" + 
+			"\n" + 
+			"\n" + 
+			"    // When the user clicks anywhere outside of the modal, close it\n" + 
+			"    window.onclick = function(event) {\n" + 
+			"        var modal = document.getElementById('id01');\n" + 
+			"        if (event.target == modal) {\n" + 
+			"            modal.style.display = \"none\";\n" + 
+			"        }\n" + 
+			"    }\n" + 
 			"</script>\n" + 
-			"<style>\n" + 
-			"tr.header {\n" + 
-			"	cursor: pointer;\n" + 
-			"}\n" + 
+			"    <style>\n" + 
+			"\n" + 
 			"\n" + 
 			"/* ---------------------- Content ---------------------- */\n" + 
 			"[id^=quotes] {\n" + 
@@ -138,7 +138,137 @@ public class Webpage {
 			"	display: table-cell;\n" + 
 			"}\n" + 
 			"}\n" + 
-			"</style>\n" + 
+			"/* Full-width input fields */\n" + 
+			"input[type=text], input[type=password] {\n" + 
+			"    width: 100%;\n" + 
+			"    padding: 12px 20px;\n" + 
+			"    margin: 8px 0;\n" + 
+			"    display: inline-block;\n" + 
+			"    border: 1px solid #ccc;\n" + 
+			"    box-sizing: border-box;\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* Set a style for all buttons */\n" + 
+			"button {\n" + 
+			"    background-color: #4CAF50;\n" + 
+			"    color: white;\n" + 
+			"    padding: 14px 20px;\n" + 
+			"    margin: 8px 0;\n" + 
+			"    border: none;\n" + 
+			"    cursor: pointer;\n" + 
+			"    width: 100%;\n" + 
+			"}\n" + 
+			"\n" + 
+			"button:hover {\n" + 
+			"    opacity: 0.8;\n" + 
+			"}\n" + 
+			".removeBtn{\n" + 
+			"	background-color: red;\n" + 
+			"	padding: 2px 2px;\n" + 
+			"	margin: 2px 0;\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* Extra styles for the cancel button */\n" + 
+			".cancelbtn {\n" + 
+			"    width: auto;\n" + 
+			"    padding: 10px 18px;\n" + 
+			"    background-color: #f44336;\n" + 
+			"    text-align:center;\n" + 
+			"}\n" + 
+			"\n" + 
+			"\n" + 
+			"/* Center the image and position the close button */\n" + 
+			".imgcontainer {\n" + 
+			"    text-align: center;\n" + 
+			"    margin: 24px 0 12px 0;\n" + 
+			"    position: relative;\n" + 
+			"}\n" + 
+			"\n" + 
+			"img.avatar {\n" + 
+			"    width: 40%;\n" + 
+			"    border-radius: 50%;\n" + 
+			"}\n" + 
+			"\n" + 
+			".modal-container {\n" + 
+			"    padding: 16px;\n" + 
+			"}\n" + 
+			".quoteContainer {\n" + 
+			"	padding-top: 16px;\n" + 
+			"}\n" + 
+			".quoteBox{\n" + 
+			"	width: 100%;\n" + 
+			"}\n" + 
+			"\n" + 
+			"span.psw {\n" + 
+			"    float: right;\n" + 
+			"    padding-top: 10px;\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* The Modal (background) */\n" + 
+			".modal {\n" + 
+			"    display: none; /* Hidden by default */\n" + 
+			"    position: fixed; /* Stay in place */\n" + 
+			"    z-index: 1; /* Sit on top */\n" + 
+			"    left: 0;\n" + 
+			"    top: 0;\n" + 
+			"    width: 100%; /* Full width */\n" + 
+			"    height: 100%; /* Full height */\n" + 
+			"    overflow: auto; /* Enable scroll if needed */\n" + 
+			"    background-color: rgb(0,0,0); /* Fallback color */\n" + 
+			"    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\n" + 
+			"    padding-top: 60px;\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* Modal Content/Box */\n" + 
+			".modal-content {\n" + 
+			"    background-color: #fefefe;\n" + 
+			"    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */\n" + 
+			"    border: 1px solid #888;\n" + 
+			"    width: 80%; /* Could be more or less, depending on screen size */\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* The Close Button (x) */\n" + 
+			".close {\n" + 
+			"    position: absolute;\n" + 
+			"    right: 25px;\n" + 
+			"    top: 0;\n" + 
+			"    color: #000;\n" + 
+			"    font-size: 35px;\n" + 
+			"    font-weight: bold;\n" + 
+			"}\n" + 
+			"\n" + 
+			".close:hover,\n" + 
+			".close:focus {\n" + 
+			"    color: red;\n" + 
+			"    cursor: pointer;\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* Add Zoom Animation */\n" + 
+			".animate {\n" + 
+			"    -webkit-animation: animatezoom 0.6s;\n" + 
+			"    animation: animatezoom 0.6s\n" + 
+			"}\n" + 
+			"\n" + 
+			"@-webkit-keyframes animatezoom {\n" + 
+			"    from {-webkit-transform: scale(0)}\n" + 
+			"    to {-webkit-transform: scale(1)}\n" + 
+			"}\n" + 
+			"\n" + 
+			"@keyframes animatezoom {\n" + 
+			"    from {transform: scale(0)}\n" + 
+			"    to {transform: scale(1)}\n" + 
+			"}\n" + 
+			"\n" + 
+			"/* Change styles for span and cancel button on extra small screens */\n" + 
+			"@media screen and (max-width: 500px) {\n" + 
+			"    span.psw {\n" + 
+			"       display: block;\n" + 
+			"       float: none;\n" + 
+			"    }\n" + 
+			"    .cancelbtn {\n" + 
+			"       width: 100%;\n" + 
+			"    }\n" + 
+			"}</style>\n" + 
 			"\n" + 
 			"</head>";
 	
@@ -146,42 +276,97 @@ public class Webpage {
 			"							<td valign=\"top\">{0}</td>\n" + 
 			"							<td valign=\"top\">{1}</td>\n" + 
 			"						</tr>";
-	private static String body = "<body>\n" + 
-			"	<div class=\"container\">\n" + 
+	private static String body1 = "<body>\n" + 
+			"<div class=\"container\">\n" + 
 			"\n" + 
-			"		<div class=\"row\">\n" + 
-			"			<h2>Quotes</h2>\n" + 
-			"			<form class=\"form-inline\">\n" + 
-			"				<div class=\"form-group\">\n" + 
-			"					<input type=\"text\" id=\"authorSearch\" onkeyup=\"searchAuthor()\"\n" + 
-			"						placeholder=\"Search for person..\" title=\"Type in a name\">\n" + 
-			"				</div>\n" + 
-			"				<div class=\"form-group\">\n" + 
-			"					<input type=\"text\" id=\"quoteSearch\" onkeyup=\"searchQuote()\"\n" + 
-			"						placeholder=\"Search for quote..\" title=\"Type in a word\">\n" + 
-			"				</div>\n" + 
-			"			</form>\n" + 
-			"			<div class=\"table-responsive\">\n" + 
-			"				<table id=\"quotes\" class=\"table-responsive\">\n" + 
-			"					<thead>\n" + 
-			"						<tr class=\"header\">\n" + 
-			"							<th style=\"width: 15%;\">Name</th>\n" + 
-			"							<th style=\"width: 85%;\">Quote</th>\n" + 
-			"						</tr>\n" + 
-			"					</thead>\n" + 
-			"					<tbody>\n" + 
-			"						{0}\n" + 
-			"					</tbody>\n" + 
-			"				</table>\n" + 
-			"			</div>\n" + 
-			"		</div>\n" + 
+			"    <div class=\"row\">\n" + 
+			"        <h2>Quotes</h2><button onclick=\"document.getElementById('id01').style.display='block'\" style=\"width:auto;\">Submit Quote</button>\n" + 
+			"        <form class=\"form-inline\">\n" + 
+			"            <div class=\"form-group\">\n" + 
+			"                <input id=\"authorSearch\" onkeyup=\"searchAuthor()\" placeholder=\"Search for person..\" title=\"Type in a name\" type=\"text\">\n" + 
+			"            </div>\n" + 
+			"            <div class=\"form-group\">\n" + 
+			"                <input id=\"quoteSearch\" onkeyup=\"searchQuote()\" placeholder=\"Search for quote..\" title=\"Type in a word\" type=\"text\">\n" + 
+			"            </div>\n" + 
+			"        </form>\n" + 
+			"        <div class=\"table-responsive\">\n" + 
+			"            <table id=\"quotes\" class=\"table-responsive\">\n" + 
+			"                <thead>\n" + 
+			"                <tr class=\"header\">\n" + 
+			"                    <th style=\"width: 15%;\">Name</th>\n" + 
+			"                    <th style=\"width: 85%;\">Quote</th>\n" + 
+			"                </tr>\n" + 
+			"                </thead>\n" + 
+			"                <tbody>";
+	
+	private static String body2 = "</tbody>\n" + 
+			"            </table>\n" + 
+			"        </div>\n" + 
+			"    </div>\n" + 
 			"\n" + 
 			"\n" + 
-			"		\n" + 
-			"	</div>\n" + 
-			"	<div class=\"footer\" style=\"font-style: italic; clear: both;\">Spiderman 2.0</div>\n" + 
-			"</body>\n" + 
-			"</html>";
+			"	<button class=\"removeBtn\" onclick=\"document.getElementById('removeQuote').style.display='block'\" style=\"width:auto;\">Remove Quote</button>\n" + 
+			"</div>\n" + 
+			"<div class=\"footer\" style=\"font-style: italic; clear: both;\">Spiderman 2.0</div>\n" + 
+			"\n" + 
+			"<div id=\"id01\" class=\"modal\" style=\"display: none;\">\n" + 
+			"    <form class=\"modal-content animate\" action=\"http://localhost:5000/quotes\" method=\"post\">\n" + 
+			"        <div class=\"imgcontainer\">\n" + 
+			"            <span onclick=\"document.getElementById('id01').style.display='none'\" class=\"close\" title=\"Close Modal\">×</span>\n" + 
+			"\n" + 
+			"        </div>\n" + 
+			"\n" + 
+			"        <div class=\"modal-container\">\n" + 
+			"            <h2>Quote Submission</h2>\n" + 
+			"            <label><b>Person</b></label>\n" + 
+			"            <input placeholder=\"Enter Name\" name=\"name\" required=\"\" type=\"text\">\n" + 
+			"\n" + 
+			"            <label><b>Quote</b></label>\n" + 
+			"            <div class=\"quoteContainer\">\n" + 
+			"                <textarea class=\"quoteBox\" type=\"text\" placeholder=\"Enter quote\" name=\"quote\" rows=\"4\" required=\"\"></textarea>\n" + 
+			"            </div>\n" + 
+			"\n" + 
+			"            <button type=\"submit\">Submit</button>\n" + 
+			"\n" + 
+			"        </div>\n" + 
+			"\n" + 
+			"        <div class=\"modal-container\" style=\"background-color:#f1f1f1\">\n" + 
+			"            <button type=\"button\" onclick=\"document.getElementById('id01').style.display='none'\" class=\"cancelbtn\">Cancel</button>\n" + 
+			"\n" + 
+			"        </div>\n" + 
+			"    </form>\n" + 
+			"</div>\n" + 
+			"<div id=\"removeQuote\" class=\"modal\" style=\"display: none;\">\n" + 
+			"    <form class=\"modal-content animate\" action=\"http://localhost:5000/quotes\" method=\"post\">\n" + 
+			"        <div class=\"imgcontainer\">\n" + 
+			"            <span onclick=\"document.getElementById('removeQuote').style.display='none'\" class=\"close\" title=\"Close Modal\">×</span>\n" + 
+			"\n" + 
+			"        </div>\n" + 
+			"\n" + 
+			"        <div class=\"modal-container\">\n" + 
+			"            <h2>Quote Removal - Talk to Parker if you want to remove a quote</h2>\n" + 
+			"            <label><b>Person</b></label>\n" + 
+			"            <input placeholder=\"Enter Name\" name=\"name\" required=\"\" type=\"text\">\n" + 
+			"\n" + 
+			"            <label><b>Quote to remove (exact match)</b></label>\n" + 
+			"            <div class=\"quoteContainer\">\n" + 
+			"                <textarea class=\"quoteBox\" type=\"text\" placeholder=\"Enter quote\" name=\"quoteToRemove\" rows=\"4\" required=\"\"></textarea>\n" + 
+			"            </div>\n" + 
+			"			<label><b>Password </b></label>\n" + 
+			"            <input placeholder=\"Enter Password\" name=\"pss\" required=\"\" type=\"password\">\n" + 
+			"            \n" + 
+			"            \n" + 
+			"            <button type=\"submit\">Remove</button>\n" + 
+			"\n" + 
+			"        </div>\n" + 
+			"\n" + 
+			"        <div class=\"modal-container\" style=\"background-color:#f1f1f1\">\n" + 
+			"            <button type=\"button\" onclick=\"document.getElementById('removeQuote').style.display='none'\" class=\"cancelbtn\">Cancel</button>\n" + 
+			"\n" + 
+			"        </div>\n" + 
+			"    </form>\n" + 
+			"</div>\n" + 
+			"</body></html>";
 	
 	private static String error = "<!DOCTYPE html>\n" + 
 			"\n" + 
@@ -196,8 +381,11 @@ public class Webpage {
 	public static String getHead() {
 		return head;
 	}
-	public static String getBody() {
-		return body;
+	public static String getBody1() {
+		return body1;
+	}
+	public static String getBody2() {
+		return body2;
 	}
 	public static String getTableRow() {
 		return tableRow;

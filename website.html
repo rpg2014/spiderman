@@ -61,9 +61,7 @@
     }
 </script>
     <style>
-tr.header {
-	cursor: pointer;
-}
+
 
 /* ---------------------- Content ---------------------- */
 [id^=quotes] {
@@ -160,6 +158,11 @@ button {
 
 button:hover {
     opacity: 0.8;
+}
+.removeBtn{
+	background-color: red;
+	padding: 2px 2px;
+	margin: 2px 0;
 }
 
 /* Extra styles for the cancel button */
@@ -264,7 +267,8 @@ span.psw {
     }
 }</style>
 
-</head><body>
+</head>
+<body>
 <div class="container">
 
     <div class="row">
@@ -293,12 +297,12 @@ span.psw {
     </div>
 
 
-
+	<button class="removeBtn" onclick="document.getElementById('removeQuote').style.display='block'" style="width:auto;">Remove Quote</button>
 </div>
 <div class="footer" style="font-style: italic; clear: both;">Spiderman 2.0</div>
 
 <div id="id01" class="modal" style="display: none;">
-    <form class="modal-content animate" action="https://obscure-inlet-41841.herokuapp.com/quotes" method="post">
+    <form class="modal-content animate" action="http://localhost:5000/quotes" method="post">
         <div class="imgcontainer">
             <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
 
@@ -323,4 +327,35 @@ span.psw {
 
         </div>
     </form>
-</div></body></html>
+</div>
+<div id="removeQuote" class="modal" style="display: none;">
+    <form class="modal-content animate" action="http://localhost:5000/quotes" method="post">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('removeQuote').style.display='none'" class="close" title="Close Modal">×</span>
+
+        </div>
+
+        <div class="modal-container">
+            <h2>Quote Removal - Talk to Parker if you want to remove a quote</h2>
+            <label><b>Person</b></label>
+            <input placeholder="Enter Name" name="name" required="" type="text">
+
+            <label><b>Quote to remove (exact match)</b></label>
+            <div class="quoteContainer">
+                <textarea class="quoteBox" type="text" placeholder="Enter quote" name="quoteToRemove" rows="4" required=""></textarea>
+            </div>
+			<label><b>Password </b></label>
+            <input placeholder="Enter Password" name="pss" required="" type="password">
+            
+            
+            <button type="submit">Remove</button>
+
+        </div>
+
+        <div class="modal-container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('removeQuote').style.display='none'" class="cancelbtn">Cancel</button>
+
+        </div>
+    </form>
+</div>
+</body></html>
