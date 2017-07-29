@@ -1,11 +1,11 @@
 package com.rpg2014.spiderman.wrapper;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.rpg2014.spiderman.WebpageBuilder;
 import com.rpg2014.spiderman.types.Person;
 
 public class SpidermanQuoteWrapper {
@@ -76,11 +76,13 @@ public class SpidermanQuoteWrapper {
 		}
 		quoteList.add(quote);
 		quoteMap.put(person.toString(), quoteList);
+		WebpageBuilder.resetWebpage();
 		if (this.sync()) {
 			return "Quote was added successfully";
 		} else {
 			return "Unable to add quote";
 		}
+		
 	}
 	public String getQuoteLink() {
 		String URL;

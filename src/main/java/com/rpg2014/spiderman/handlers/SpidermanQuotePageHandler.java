@@ -5,13 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Map.Entry;
-
-import org.json.JSONObject;
-
 import com.rpg2014.spiderman.WebpageBuilder;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 import com.rpg2014.spiderman.types.FailedAuthException;
@@ -60,7 +55,8 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 					OutputStream os = httpExchange.getResponseBody();
 					os.write(response.getBytes());
 					os.close();
-				}else if(params.containsKey("pss")&& params.containsKey("quoteToRemove")&&params.get("pss").equalsIgnoreCase("supersecretpassword")) {
+				} else if (params.containsKey("pss") && params.containsKey("quoteToRemove")
+						&& params.get("pss").equalsIgnoreCase("supersecretpassword")) {
 					handleQuoteRemove(params);
 					String response = "OK";
 					int responseCode = 303;
@@ -70,7 +66,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 					OutputStream os = httpExchange.getResponseBody();
 					os.write(response.getBytes());
 					os.close();
-				}else {
+				} else {
 					throw new Exception("Request doesn't contain the right headers or pass is wrong");
 				}
 
@@ -104,12 +100,12 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		}
 
 	}
-	
-	protected void handleQuoteRemove(final Map<String,String> params) {
-		if(quoteWrapper == null) {
+
+	protected void handleQuoteRemove(final Map<String, String> params) {
+		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
-		quoteWrapper.removeQuote(new Person(params.get("name")),params.get("quoteToRemove"));
+		quoteWrapper.removeQuote(new Person(params.get("name")), params.get("quoteToRemove"));
 		WebpageBuilder.resetWebpage();
 	}
 

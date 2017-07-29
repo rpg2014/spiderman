@@ -24,7 +24,6 @@ import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxStyleRegistry;
 import com.mxgraph.view.mxStylesheet;
 
 import org.jgrapht.GraphPath;
