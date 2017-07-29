@@ -105,6 +105,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
+		logger.logInfo("Removeing quote: "+params.get("quoteToRemove").substring(0, 20)+"... by: "+params.get("name"), className);
 		quoteWrapper.removeQuote(new Person(params.get("name")), params.get("quoteToRemove"));
 		WebpageBuilder.resetWebpage();
 	}
@@ -113,7 +114,8 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
-		quoteWrapper.addQuote(new Person(params.get("name")), params.get("quote"));
+		logger.logInfo("Adding quote: "+params.get("quoteToRemove").substring(0, 20)+"... by: "+params.get("name"), className);
+		quoteWrapper.addQuote(new Person(params.get("name")), params.get("quote").trim());
 		
 	}
 
@@ -121,8 +123,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
-		System.out.println("recived=" +authCode);
-		System.out.println("is=" +quoteWrapper.getQuoteMap().toString().hashCode());
+
 		return authCode.equals(quoteWrapper.getQuoteMap().toString().hashCode());
 	}
 
