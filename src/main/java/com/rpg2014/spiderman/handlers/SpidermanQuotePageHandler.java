@@ -114,13 +114,15 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
 		quoteWrapper.addQuote(new Person(params.get("name")), params.get("quote"));
-		WebpageBuilder.resetWebpage();
+		
 	}
 
 	private boolean isAuthenticated(Integer authCode) {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
+		System.out.println("recived=" +authCode);
+		System.out.println("is=" +quoteWrapper.getQuoteMap().toString().hashCode());
 		return authCode.equals(quoteWrapper.getQuoteMap().toString().hashCode());
 	}
 

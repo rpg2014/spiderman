@@ -273,8 +273,8 @@ public class Webpage {
 			"</head>";
 	
 	private static String tableRow = "<tr>\n" + 
-			"							<td valign=\"top\">{0}</td>\n" + 
-			"							<td valign=\"top\">{1}</td>\n" + 
+			"							<td valign=\"top\" type=\"text\">{0}</td>\n" + 
+			"							<td valign=\"top\" type=\"text\">{1}</td>\n" + 
 			"						</tr>";
 	private static String body1 = "<body>\n" + 
 			"<div class=\"container\">\n" + 
