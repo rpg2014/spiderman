@@ -310,7 +310,7 @@ public class Webpage {
 			"<div class=\"footer\" style=\"font-style: italic; clear: both;\">Spiderman 2.0</div>\n" + 
 			"\n" + 
 			"<div id=\"id01\" class=\"modal\" style=\"display: none;\">\n" + 
-			"    <form class=\"modal-content animate\" action=\"http://localhost:5000/quotes\" method=\"post\">\n" + 
+			"    <form class=\"modal-content animate\" action=\"https://obscure-inlet-41841.herokuapp.com/quotes\" method=\"post\">\n" + 
 			"        <div class=\"imgcontainer\">\n" + 
 			"            <span onclick=\"document.getElementById('id01').style.display='none'\" class=\"close\" title=\"Close Modal\">×</span>\n" + 
 			"\n" + 
@@ -337,7 +337,7 @@ public class Webpage {
 			"    </form>\n" + 
 			"</div>\n" + 
 			"<div id=\"removeQuote\" class=\"modal\" style=\"display: none;\">\n" + 
-			"    <form class=\"modal-content animate\" action=\"http://localhost:5000/quotes\" method=\"post\">\n" + 
+			"    <form class=\"modal-content animate\" action=\"https://obscure-inlet-41841.herokuapp.com/quotes\" method=\"post\">\n" + 
 			"        <div class=\"imgcontainer\">\n" + 
 			"            <span onclick=\"document.getElementById('removeQuote').style.display='none'\" class=\"close\" title=\"Close Modal\">×</span>\n" + 
 			"\n" + 
@@ -366,7 +366,8 @@ public class Webpage {
 			"        </div>\n" + 
 			"    </form>\n" + 
 			"</div>\n" + 
-			"</body></html>";
+			"</body></html>\n" + 
+			"";
 	
 	private static String error = "<!DOCTYPE html>\n" + 
 			"\n" + 
