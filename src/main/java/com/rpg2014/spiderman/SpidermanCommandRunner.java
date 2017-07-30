@@ -293,7 +293,7 @@ public class SpidermanCommandRunner {
 		graphWrapper.sync();
 
 		if (responseMessage.isEmpty()) {
-			responseMessage = "Person not found in database, check your commas and spellings";
+			responseMessage = "Add requires 2 people.";
 		}
 		return new GroupMeResponse(responseMessage);
 	}
