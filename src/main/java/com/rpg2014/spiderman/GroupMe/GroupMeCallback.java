@@ -39,7 +39,7 @@ public class GroupMeCallback{
         JSONObject obj = new JSONObject(callback);
         
         text = obj.getString("text");
-        senderID = obj.getInt("sender_id");
+        //senderID = obj.getInt("sender_id");
         senderType = obj.getString("sender_type");
         
         if(text.startsWith("@spiderman")){
