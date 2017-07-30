@@ -1,6 +1,131 @@
 package com.rpg2014.spiderman.types;
 
 public class Webpage {
+	private static String help="<!DOCTYPE html>\n" + 
+			"<html>\n" + 
+			"\n" + 
+			"\n" + 
+			"<head>\n" + 
+			"    <title>Spiderman 2.0 Help</title>\n" + 
+			"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" + 
+			"    <link rel=\"stylesheet\" href=\"https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css\">\n" + 
+			"</head>\n" + 
+			"\n" + 
+			"<body>\n" + 
+			"    <div class=\"container\">\n" + 
+			"        <nav>\n" + 
+			"            <h1>How to use Spiderman 2.0</h1>\n" + 
+			"        </nav>\n" + 
+			"        <section>\n" + 
+			"\n" + 
+			"            <h2>Command Syntax</h2>\n" + 
+			"            <span><i>@spiderman command : arg1 , arg2 ...</i></span>\n" + 
+			"            <h5>With Spiderman 2.0 commands and names are no longer case sensitive. They can also contain spaces (eg. \"Parker\n" + 
+			"                G\" is the same as \"parker g\")</h5>\n" + 
+			"        </section>\n" + 
+			"        <section>\n" + 
+			"            <h2>List of Commands</h2>\n" + 
+			"            <h4>All commands start with \"@spiderman\"</h4>\n" + 
+			"            <ul>\n" + 
+			"                <li>View\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage: <b>view :<i> name 1, name 2, ...</b></i>\n" + 
+			"                        </li>\n" + 
+			"                        <li>Example: \"@spiderman view : parker g, jj\"</li>\n" + 
+			"                        <li>The name arguments are optional. \"View\" and \"view : all\" display the entire web.</li>\n" + 
+			"                        <li>This command displays a picture of the web of the people given.</li>\n" + 
+			"\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>Create\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage: <b>create :<i> name 1, name 2, ...</i></b></li>\n" + 
+			"                        <li>This command addes people to the web. The new person must then be connected to an existing person\n" + 
+			"                            on the map or else they will have to be readded later.</li>\n" + 
+			"                    </ul>\n" + 
+			"\n" + 
+			"                </li>\n" + 
+			"                <li>Add\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage <b>add : <i>(person to add connections to) , (new connection 1), (new connection 2), ...</i></b></li>\n" + 
+			"                        <li>Example: \"@spiderman add : pat s, mckinze, kaylin, freshman girl 3\".</li>\n" + 
+			"                        <li>The example would add connections between Pat and the freshman girls.</li>\n" + 
+			"                        <li>People who are not currently on the web <b>have to be created using the create command</b> or else\n" + 
+			"                            the command will fail. </li>\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>Remove\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage <b>remove : <i>(person to remove connections from) , (connection 1), (connection 2), ...</i></b></li>\n" + 
+			"                        <li>Example: \"@spiderman remove : pat s, mckinze, kaylin, freshman girl 3\".</li>\n" + 
+			"                        <li>The example would remove connections between Pat and the freshman girls.</li>\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>List\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage <b>list : <i>name 1, name 2, ...</i></b></li>\n" + 
+			"                        <li>Example: \"@spiderman list : parker g, jj\"</li>\n" + 
+			"                        <li>The name arguments are optional. \"List\" and \"list : all\" display all the people who are on the web.</li>\n" + 
+			"                        <li>This command lists all of the connections the given person has on the web.</li>\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>Path\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage <b>path : <i>start name, finish name</i></b></li>\n" + 
+			"                        <li>Example: \"@spiderman path: parker g, jj\"</li>\n" + 
+			"                        <li>This command displays the shortest path on the web between two people</li>\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>Size\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage <b>size : <i>name 1, name 2, ...</i></b></li>\n" + 
+			"                        <li>Example: \"@spiderman size : parker g, jj\"</li>\n" + 
+			"                        <li>The name arguments are optional. \"size\" will display the 3 people with the most connections</li>\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>Quote\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usages\n" + 
+			"                            <ul>\n" + 
+			"                                <li>quote\n" + 
+			"                                    <ul>\n" + 
+			"                                        <li>This will display a random quote.</li>\n" + 
+			"                                    </ul>\n" + 
+			"                                </li>\n" + 
+			"                                <li>quote : name\n" + 
+			"                                    <ul>\n" + 
+			"                                        <li>This will display a random quote that was said by the person.</li>\n" + 
+			"                                    </ul>\n" + 
+			"                                </li>\n" + 
+			"                                <li>quote : name , text to search\n" + 
+			"                                    <ul>\n" + 
+			"                                        <li>This will search for a quote said by the person that contains the given text.</li>\n" + 
+			"                                    </ul>\n" + 
+			"                                </li>\n" + 
+			"                            </ul>\n" + 
+			"                        </li>\n" + 
+			"\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"                <li>Quote Link\n" + 
+			"                    <ul>\n" + 
+			"                        <li>Usage <b>quote link</b></li>\n" + 
+			"                        <li>This command will display the current link to the quote page.</li>\n" + 
+			"                    </ul>\n" + 
+			"                </li>\n" + 
+			"            </ul>\n" + 
+			"\n" + 
+			"        </section>\n" + 
+			"        <section>\n" + 
+			"            <h2>Quote Page</h2>\n" + 
+			"            <p><h5>This webpage displays all the quotes in the database.  You can search by the name of the person who said the quote or by the quote itself.  You can also add new quotes using the big green button</h5></p>\n" + 
+			"            <p>In order to make it so that random people cannot see the stupid shit that we've said, the link to the page changes everytime a quote is added or removed. The new link can be gotten with the \"quote link\" command.</p>\n" + 
+			"        </section>\n" + 
+			"    </div>\n" + 
+			"    <div class=\"footer\" style=\"margin: auto; text-align: center;font-style: italic; clear: both;\">Spiderman 2.0</div>\n" + 
+			"</body>\n" + 
+			"\n" + 
+			"</html>";
 	private static String head="<!DOCTYPE html>\n" + 
 			"<html><head>\n" + 
 			"    <title>Quotes</title>\n" + 
@@ -393,5 +518,8 @@ public class Webpage {
 	}
 	public static String getError() {
 		return error;
+	}
+	public static String getHelp() {
+		return help;
 	}
 }

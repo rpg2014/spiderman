@@ -192,8 +192,15 @@ public class SpidermanCommandRunner {
 	}
 
 	public static GroupMeResponse getDefaultResponse() {
+		String url = "";
+		if(Boolean.valueOf(System.getenv("ON_HEROKU"))) {
+			url = System.getenv("URL");
+			url = url.substring(0, url.length()-11)+"help";
+		}else {
+			url = "localhost:5000/help";
+		}
 		return new GroupMeResponse(
-				"Not a valid command.\nValid commands are: view, create, add, remove, remove person, path, size and list.");
+				"See this page for help: "+url);
 	}
 
 	protected static GroupMeResponse getQuoteLink() {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import com.rpg2014.spiderman.handlers.SpidermanHandler;
+import com.rpg2014.spiderman.handlers.SpidermanHelpPageHandler;
 import com.rpg2014.spiderman.handlers.SpidermanQuotePageHandler;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 import com.sun.net.httpserver.HttpServer;
@@ -39,6 +40,7 @@ public class Spiderman{
             server = HttpServer.create(new InetSocketAddress(portNum), 0);
             server.createContext("/requests", new SpidermanHandler());
             server.createContext("/quotes",new SpidermanQuotePageHandler());
+            server.createContext("/help", new SpidermanHelpPageHandler());
             server.setExecutor(null); // creates a default executor
             server.start();
             }catch (IOException e ){
