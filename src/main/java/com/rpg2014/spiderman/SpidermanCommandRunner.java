@@ -111,6 +111,9 @@ public class SpidermanCommandRunner {
 		case DAD_JOKE:
 			response = getDadJoke();
 			break;
+		case PORN:
+			response = new GroupMeResponse("Here you go: https://www.pornhub.com/random");
+			break;
 		case JOKE:
 			if (commandEntry.getValue().size() > 2) {
 				response = new GroupMeResponse("Joke only takes 2 args");
