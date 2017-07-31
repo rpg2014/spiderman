@@ -81,6 +81,7 @@ public class GroupMeResponse {
 	
 	public void setGroupIdToSendTo(final GroupMeCallback callback) {
 		if(callback.getGroupID().equals("16371762") ) {
+			logger.logInfo("Sending message to the dads", this.getClass().getSimpleName());
 			if(Boolean.valueOf(System.getenv("ON_HEROKU"))){
 				this.bot_id = System.getenv("DAD_BOT_ID");
 			}else {

@@ -14,7 +14,8 @@ public class SpidermanQuoteWrapper {
 	Random rand;
 	private SpidermanDynamoWrapper dynamoWrapper = SpidermanDynamoWrapper.getInstance();
 	private Map<String, List<String>> quoteMap;
-	
+	private List<String> quoteList;
+	private int numQuotes = 0;
 
 
 	public static SpidermanQuoteWrapper getInstance() {
@@ -27,12 +28,24 @@ public class SpidermanQuoteWrapper {
 	}
 	
 	public String getRandomQuote() {
-		List<Person> peopleList = new ArrayList<>();
-		for (Map.Entry<String, List<String>> entry:quoteMap.entrySet()) {
-			peopleList.add(new Person(entry.getKey()));
-		}
 		
-		return getRandomQuote(peopleList.get(rand.nextInt(peopleList.size())));
+		if (numQuotes ==0) {
+			numQuotes = getNumOfQuotes();
+		}
+		int num = rand.nextInt(numQuotes);
+		int count = 0;
+		for (Map.Entry<String, List<String>> entry:quoteMap.entrySet()) {
+			for(String quote : entry.getValue()) {
+				if(num == count) {
+					return quote + "\n    -" + entry.getKey().toString();
+				}
+				count++;
+				
+			}
+			
+		}
+		return "Something broke";
+		
 	}
 
 	public String getRandomQuote(final Person person) {
@@ -111,6 +124,16 @@ public class SpidermanQuoteWrapper {
 			}
 		}
 		return retQuote;
+	}
+	
+	public int getNumOfQuotes() {
+		int num = 0;
+		for(Map.Entry<String, List<String>> entry : quoteMap.entrySet()) {
+			for(String s : entry.getValue()) {
+				num++;
+			}
+		}
+		return num;
 	}
 
 }
