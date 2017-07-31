@@ -44,6 +44,18 @@ public class SpidermanProperties {
 		
 		return null;
 	}
+	
+	public static String getDadBotID() {
+		try {
+			Scanner scan = new Scanner(new File(".dadbotId"));
+			return scan.nextLine();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	public static int getPort() {
 		return port;
 	}

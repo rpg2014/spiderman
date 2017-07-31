@@ -106,7 +106,7 @@ public class SpidermanHandler implements HttpHandler {
 		// commandEntry.getKey().toString(),
 		// commandEntry.getValue().toString()), className);
 		GroupMeResponse gmResponse = SpidermanCommandRunner.runCommand(commandEntry);
-		
+		gmResponse.setGroupIdToSendTo(callback);
 		// if(gmResponse.isImageResponse()){
 		// do stuff for uploading an img
 		// }

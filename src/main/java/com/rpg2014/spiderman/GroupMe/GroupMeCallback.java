@@ -30,6 +30,7 @@ public class GroupMeCallback{
     //the important part
     private String text;
     private boolean isCommand;
+    private String groupID;
     
     
     
@@ -37,7 +38,7 @@ public class GroupMeCallback{
     public GroupMeCallback(final InputStream inputStream){
         String callback = convertInputStreamToString(inputStream);
         JSONObject obj = new JSONObject(callback);
-        
+        groupID = obj.getString("group_id");
         text = obj.getString("text");
         //senderID = obj.getInt("sender_id");
         senderType = obj.getString("sender_type");
@@ -56,6 +57,10 @@ public class GroupMeCallback{
     public boolean isCommand(){
         return isCommand;
     }
+    
+    public String getGroupID() {
+    	return groupID;
+    }
 
 
     protected String parseCallbackForText(final String callbackJson){
@@ -68,4 +73,6 @@ public class GroupMeCallback{
         Scanner scan = new Scanner(in).useDelimiter("\\A");
         return scan.hasNext() ? scan.next() : "";
     }
+
+	
 }

@@ -78,6 +78,16 @@ public class GroupMeResponse {
 	public boolean isImageResonse() {
 		return imageResonse;
 	}
+	
+	public void setGroupIdToSendTo(final GroupMeCallback callback) {
+		if(callback.getGroupID().equals("16371762") ) {
+			if(Boolean.valueOf(System.getenv("ON_HEROKU"))){
+				this.bot_id = System.getenv("DAD_BOT_ID");
+			}else {
+				this.bot_id = SpidermanProperties.getDadBotID();
+			}
+		}
+	}
 
 	public void setUrl(String url) {
 		imageObject = new JSONObject();
