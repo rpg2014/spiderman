@@ -43,7 +43,7 @@ public class GroupMeCallback{
         //senderID = obj.getInt("sender_id");
         senderType = obj.getString("sender_type");
         
-        if(text.startsWith("@spiderman")){
+        if(text.toLowerCase().startsWith("@spiderman")){
             isCommand = true;
         }else{
             isCommand = false;
