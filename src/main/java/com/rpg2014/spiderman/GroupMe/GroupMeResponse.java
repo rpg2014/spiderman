@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.rpg2014.spiderman.Groups;
-import com.rpg2014.spiderman.SpidermanProperties;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 
 /**

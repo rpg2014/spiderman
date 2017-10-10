@@ -16,13 +16,9 @@ public class SpidermanProperties {
 		try {
 			prop = new Properties();
 			String propFileName = "config.properties";
-			InputStream inputStream = new FileInputStream("config.properties"); //SpidermanProperties.class.getClassLoader().getResourceAsStream(propFileName);
+			InputStream inputStream = new FileInputStream(propFileName); 
 			
-			if (inputStream != null) {
-				prop.load(inputStream);
-			} else {
-				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-			}
+			prop.load(inputStream);
 			
 			port = Integer.valueOf(prop.getProperty("PORT"));
 			

@@ -1,11 +1,7 @@
 package com.rpg2014.spiderman.wrapper;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;

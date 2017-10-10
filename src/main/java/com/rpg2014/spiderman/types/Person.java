@@ -23,7 +23,6 @@ public class Person{
 	
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public String toString() {
 
 		return WordUtils.capitalize(name).trim();

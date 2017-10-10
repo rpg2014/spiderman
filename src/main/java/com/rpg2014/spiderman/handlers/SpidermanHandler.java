@@ -66,7 +66,7 @@ public class SpidermanHandler implements HttpHandler {
 
 				os.write(response.getBytes());
 				os.close();
-				logger.logInfo("Received request " + response+"from group" +Groups.Of(callback.getGroupID()).name(), className);
+				logger.logInfo("Received request " + response+", from group " +Groups.Of(callback.getGroupID()).name(), className);
 				// this will hand
 				if (callback.isCommand()) {
 					this.handleCallBack(callback);
@@ -217,6 +217,7 @@ public class SpidermanHandler implements HttpHandler {
 		}else {
 			Scanner scan = new Scanner(new File(".access")); 
 			token = scan.nextLine().trim();
+			scan.close();
 		}
 		return token;
 	}
