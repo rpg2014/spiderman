@@ -6,6 +6,7 @@ import com.rpg2014.spiderman.GroupMe.GroupMeResponse;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 import com.rpg2014.spiderman.types.SpidermanCommand;
 import com.rpg2014.spiderman.parsers.SpidermanParser;
+import com.rpg2014.spiderman.Groups;
 import com.rpg2014.spiderman.SpidermanCommandRunner;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -65,7 +66,7 @@ public class SpidermanHandler implements HttpHandler {
 
 				os.write(response.getBytes());
 				os.close();
-				logger.logInfo("Received request " + response, className);
+				logger.logInfo("Received request " + response+"from group" +Groups.Of(callback.getGroupID()).name(), className);
 				// this will hand
 				if (callback.isCommand()) {
 					this.handleCallBack(callback);
