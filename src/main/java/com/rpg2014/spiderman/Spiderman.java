@@ -26,12 +26,12 @@ public class Spiderman{
         try{
 
             boolean onHeroku = Boolean.valueOf(System.getenv("ON_HEROKU"));
-
+            
             int portNum;
             if(onHeroku){
                 portNum = Integer.valueOf(System.getenv("PORT"));
             }else {
-            	
+            	SpidermanProperties.getProperties();
                 portNum = 5000;
 
             }

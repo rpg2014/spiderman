@@ -45,10 +45,10 @@ public class SpidermanHandler implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange httpExchange) throws IOException {
-
+		GroupMeCallback callback = null;
 		try {
 			if (httpExchange.getRequestMethod().equalsIgnoreCase("post")) {
-				GroupMeCallback callback = new GroupMeCallback(httpExchange.getRequestBody());
+				callback = new GroupMeCallback(httpExchange.getRequestBody());
 				// respond to server that we got the request.
 				String response;
 				int responseCode;
@@ -89,7 +89,10 @@ public class SpidermanHandler implements HttpHandler {
 
 			os.write(response.getBytes());
 			os.close();
-			this.doPost(new GroupMeResponse("Something Broke: "+e.getMessage()));
+			GroupMeResponse errorResponse = new GroupMeResponse("Something Broke: "+e.getMessage());
+			errorResponse.setGroupIdToSendTo(callback);
+			this.doPost(errorResponse);
+			
 			logger.logFatal("Expection: " + e.getMessage(), className);
 			e.printStackTrace();
 		}
@@ -144,6 +147,7 @@ public class SpidermanHandler implements HttpHandler {
 			httpResponse = httpclient.execute(post);
 
 			logger.logInfo("GM request: " + httpResponse.getStatusLine(), className);
+			
 			HttpEntity entity2 = httpResponse.getEntity();
 			// do something useful with the response body
 			// and ensure it is fully consumed

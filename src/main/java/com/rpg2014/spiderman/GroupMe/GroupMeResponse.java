@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.rpg2014.spiderman.Groups;
 import com.rpg2014.spiderman.SpidermanProperties;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 
@@ -18,6 +19,7 @@ public class GroupMeResponse {
 	private static SpidermanLogger logger = SpidermanLogger.getInstance();
 	boolean imageResonse;
 	String text;
+	Groups group;
 	String bot_id;
 	// image only things
 	BufferedImage image;
@@ -29,12 +31,7 @@ public class GroupMeResponse {
 
 	public GroupMeResponse(final String text) {
 		this.text = text;
-		if (Boolean.valueOf(System.getenv("ON_HEROKU"))){
-			this.bot_id = System.getenv("BOT_ID");
-			
-		}else {
-			this.bot_id = SpidermanProperties.getBotID(); 
-		}
+		
 		this.imageResonse = false;
 		
 	}
@@ -44,12 +41,7 @@ public class GroupMeResponse {
 	
 	public GroupMeResponse(final String text,final BufferedImage img) {
 		this.text = text;
-		if (Boolean.valueOf(System.getenv("ON_HEROKU"))){
-			this.bot_id = System.getenv("BOT_ID");
-			
-		}else {
-			this.bot_id = SpidermanProperties.getBotID(); 
-		}
+		
 		this.imageResonse = true;
 		this.image = img;
 		this.type = "image";
@@ -69,7 +61,7 @@ public class GroupMeResponse {
 		return text;
 	}
 	public String getBotID() {
-		return bot_id;
+		return group.getBotID();
 	}
 	public JSONArray getAttachments() {
 		return this.attachments;
@@ -80,13 +72,14 @@ public class GroupMeResponse {
 	}
 	
 	public void setGroupIdToSendTo(final GroupMeCallback callback) {
-		if(callback.getGroupID().equals("16371762") ) {
-			logger.logInfo("Sending message to the dads", this.getClass().getSimpleName());
-			if(Boolean.valueOf(System.getenv("ON_HEROKU"))){
-				this.bot_id = System.getenv("DAD_BOT_ID");
-			}else {
-				this.bot_id = SpidermanProperties.getDadBotID();
-			}
+		//TODO change this
+		try {
+		 group = Groups.Of(callback.getGroupID());
+		 
+		}catch(IllegalArgumentException e) {
+			logger.logError("Unable to match group id to a group", this.getClass().getSimpleName());
+			group = Groups.TEST;
+			
 		}
 	}
 
