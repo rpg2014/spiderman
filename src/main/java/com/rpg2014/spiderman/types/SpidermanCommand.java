@@ -13,6 +13,7 @@ public enum SpidermanCommand{
     HELP(),
     CREATE(),
     ADD_QUOTE(),
+    RPS(),
     PORN(),
     QUOTE_LINK(),
     QUOTE();

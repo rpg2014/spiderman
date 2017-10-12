@@ -125,6 +125,13 @@ public class SpidermanCommandRunner {
 				response = getChuckJoke();
 			}
 			break;
+		case RPS:
+			if(commandEntry.getValue().size()!=1) {
+				response = new GroupMeResponse("Do you even know how to play?");
+			}
+			response = RockPaperScissors.play(commandEntry.getValue().get(0));
+			
+			break;
 		default:
 			response = getDefaultResponse();
 			break;
