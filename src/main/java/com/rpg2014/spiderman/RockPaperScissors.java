@@ -34,7 +34,7 @@ public class RockPaperScissors {
 		if (winner == HUMAN) {
 			response = new GroupMeResponse("I chose " + computerGuess + ". You won.");
 		} else if (winner == COMPUTER) {
-			response = new GroupMeResponse("I chose " + computerGuess + ". I won");
+			response = new GroupMeResponse("I chose " + computerGuess + ". I won.");
 		} else {
 			response = new GroupMeResponse("I chose " + computerGuess + ". We tied.");
 		}
