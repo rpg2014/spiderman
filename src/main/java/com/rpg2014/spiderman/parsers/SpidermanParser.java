@@ -27,7 +27,7 @@ public class SpidermanParser {
 	}
 
 	public static Map.Entry<SpidermanCommand, List<String>> getCommandEntry(final GroupMeCallback callback) {
-		String[] commandArr = callback.getText().replace("@spiderman", "").trim().split(":");// );
+		String[] commandArr = callback.getText().toLowerCase().replace("@spiderman", "").trim().split(":");// );
 
 		// removes the : + replaces spaces with underscore
 		
