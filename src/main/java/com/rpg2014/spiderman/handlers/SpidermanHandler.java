@@ -104,7 +104,7 @@ public class SpidermanHandler implements HttpHandler {
 		// get first word of text check for @spiderman. if true then check second word
 		// to see if valid command (enum parse?)
 		// then pass the command in a map entry <SpidermanCommand,String[] args> then
-
+		
 		Map.Entry<SpidermanCommand, List<String>> commandEntry = SpidermanParser.getCommandEntry(callback);
 		// logger.logInfo(MessageFormat.format("Found command {0} + args {1}",
 		// commandEntry.getKey().toString(),
@@ -170,8 +170,11 @@ public class SpidermanHandler implements HttpHandler {
 	private String doImgPost(final BufferedImage img) throws IOException {
 		ByteArrayOutputStream imgOutputStream = new ByteArrayOutputStream();
 		ImageIO.write(img,"jpg",imgOutputStream);
+		
+		
 		//if local write to file so i can see image;
 		if(!Boolean.valueOf(System.getenv("ON_HEROKU"))) {
+			logger.logInfo("Writing to file",className);
 			FileOutputStream fileos = new FileOutputStream(new File("img.jpg"));
 			fileos.write(imgOutputStream.toByteArray());
 			fileos.flush();
@@ -192,6 +195,7 @@ public class SpidermanHandler implements HttpHandler {
 		CloseableHttpResponse httpResponse = httpclient.execute(imgPost);
 		imgPost.completed();
 		logger.logInfo("Img upload response: " +httpResponse.getStatusLine(), className);
+		
 		OutputStream os = new ByteArrayOutputStream();
 		HttpEntity entity = httpResponse.getEntity();
 		entity.writeTo(os);

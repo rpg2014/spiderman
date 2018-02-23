@@ -319,6 +319,7 @@ public class SpidermanCommandRunner {
 		lazyGraphWrapper();
 		GroupMeResponse response;
 		if ((namesToView.size() == 1 && namesToView.get(0).equalsIgnoreCase("all")) || namesToView.size() == 0) {
+			
 			BufferedImage img = graphWrapper.viewAll();
 			response = new GroupMeResponse("", img);
 		} else {
