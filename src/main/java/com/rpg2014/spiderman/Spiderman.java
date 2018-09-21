@@ -31,7 +31,7 @@ public class Spiderman{
             if(onHeroku){
                 portNum = Integer.valueOf(System.getenv("PORT"));
             }else {
-            	SpidermanProperties.getProperties();
+            	//SpidermanProperties.getProperties();
                 portNum = 5000;
 
             }
