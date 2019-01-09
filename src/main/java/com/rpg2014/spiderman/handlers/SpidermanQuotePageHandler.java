@@ -115,7 +115,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
-		logger.logInfo("Adding quote: "+params.get("quote").substring(0, Math.max(20,params.get("quote").length()+1)+"... by: "+params.get("name"), className);
+		logger.logInfo("Adding quote: "+params.get("quote").substring(0, Math.max(20,params.get("quote").length()+1))+"... by: "+params.get("name"), className);
 		quoteWrapper.addQuote(new Person(params.get("name")), params.get("quote").trim());
 		
 	}
