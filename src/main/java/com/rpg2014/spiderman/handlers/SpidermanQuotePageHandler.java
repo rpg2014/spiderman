@@ -106,7 +106,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
-		logger.logInfo("Removeing quote: "+params.get("quoteToRemove").substring(0, 20)+"... by: "+params.get("name"), className);
+		logger.logInfo("Removeing quote: "+params.get("quoteToRemove").substring(0, Math.min(20,params.get("quote").length()-1))+"... by: "+params.get("name"), className);
 		quoteWrapper.removeQuote(new Person(params.get("name")), params.get("quoteToRemove"));
 		WebpageBuilder.resetWebpage();
 	}
@@ -115,7 +115,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 		if (quoteWrapper == null) {
 			quoteWrapper = SpidermanQuoteWrapper.getInstance();
 		}
-		logger.logInfo("Adding quote: "+params.get("quote").substring(0, Math.min(20,params.get("quote").length()+1))+"... by: "+params.get("name"), className);
+		logger.logInfo("Adding quote: "+params.get("quote").substring(0, Math.min(20,params.get("quote").length()-1))+"... by: "+params.get("name"), className);
 		quoteWrapper.addQuote(new Person(params.get("name")), params.get("quote").trim());
 		
 	}
