@@ -32,3 +32,4 @@ javaconfig.json
 .botId
 target/*.jar
 /target/
+spiderman.iml
