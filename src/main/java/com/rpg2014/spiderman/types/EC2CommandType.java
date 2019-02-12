@@ -1,9 +1,9 @@
 package com.rpg2014.spiderman.types;
 
 public enum EC2CommandType {
-    START_SERVER("start"),
-    STOP_SERVER("stop"),
-    REBOOT_SERVER("reboot"),
+    START("start"),
+    STOP("stop"),
+    REBOOT("reboot"),
     NOT_COMMAND("");
 
     String command;

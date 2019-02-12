@@ -1,5 +1,7 @@
 package com.rpg2014.spiderman.types;
 
+import java.util.Arrays;
+
 public class EC2Command {
 
 
@@ -8,19 +10,22 @@ public class EC2Command {
     boolean isCommand;
 
     EC2Command(EC2CommandType commandType, boolean isCommand){
-        commandType = commandType;
+        this.commandType = commandType;
         this.isCommand = isCommand;
     }
 
     public static EC2Command parse(String text) {
-        String[] commandArray = text.split("//s+");
+        String[] commandArray = text.split("\\s+");
+        Arrays.stream(commandArray).forEach(System.out::println);
         if(commandArray[0].equals("!server") || commandArray[0].equals("!s")){
 
-            EC2CommandType commandType = EC2CommandType.valueOf(commandArray[1]);
-            return new EC2Command(commandType,true);
-        }else{
-            return new EC2Command(EC2CommandType.NOT_COMMAND,false);
+            EC2CommandType commandType = EC2CommandType.valueOf(commandArray[1].toUpperCase());
+            if (commandType!=null) {
+                return new EC2Command(commandType, true);
+            }
         }
+        return new EC2Command(EC2CommandType.NOT_COMMAND,false);
+
 
     }
 

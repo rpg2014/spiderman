@@ -23,9 +23,10 @@ public class IronSpiderHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange ) throws IOException {
             try {
                 if (httpExchange.getRequestMethod().equalsIgnoreCase("POST")) {
-
-                    JSONObject obj = new JSONObject(convertInputStreamToString(httpExchange.getRequestBody()));
+                    String json = convertInputStreamToString(httpExchange.getRequestBody());
+                    JSONObject obj = new JSONObject(json);
                     final String text = obj.getString("text");
+                    System.out.println(text);
                     final EC2Command command = EC2Command.parse(text);
                     if (command.isCommand()) {
 //                    Thread responseThread = new Thread(() -> {
@@ -52,6 +53,8 @@ public class IronSpiderHandler implements HttpHandler {
                 String response = "451 Forbidden";
                 int responseCode = 451;
                 sendResponse(httpExchange,response,responseCode);
+            }catch(Exception e){
+                e.printStackTrace();
             }
 
 
