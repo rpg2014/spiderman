@@ -16,7 +16,6 @@ import com.sun.net.httpserver.HttpServer;
 public class Spiderman{
 
     private static final String className = Spiderman.class.getSimpleName();
-    private static Spiderman ourInstance;
     private static HttpServer server;
     private static SpidermanLogger logger = SpidermanLogger.getInstance();
 
