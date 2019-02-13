@@ -16,7 +16,6 @@ public class EC2Command {
 
     public static EC2Command parse(String text) {
         String[] commandArray = text.split("\\s+");
-        Arrays.stream(commandArray).forEach(System.out::println);
         if(commandArray[0].equals("!server") || commandArray[0].equals("!s")){
 
             EC2CommandType commandType = EC2CommandType.valueOf(commandArray[1].toUpperCase());

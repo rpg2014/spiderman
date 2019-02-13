@@ -24,6 +24,7 @@ public class IronSpiderHandler implements HttpHandler {
             try {
                 if (httpExchange.getRequestMethod().equalsIgnoreCase("POST")) {
                     String json = convertInputStreamToString(httpExchange.getRequestBody());
+                    logger.logInfo("json is: "+json,CLASS_NAME);
                     JSONObject obj = new JSONObject(json);
                     final String text = obj.getString("text");
                     System.out.println(text);
