@@ -18,10 +18,13 @@ public class EC2Command {
         String[] commandArray = text.split("\\s+");
         if(commandArray[0].equals("!server") || commandArray[0].equals("!s")){
 
-            EC2CommandType commandType = EC2CommandType.valueOf(commandArray[1].toUpperCase());
-            if (commandType!=null) {
-                return new EC2Command(commandType, true);
+            for (EC2CommandType type:
+                 EC2CommandType.values()) {
+                if (type.toString().equalsIgnoreCase(commandArray[1])){
+                    return new EC2Command(type,true);
+                }
             }
+
         }
         return new EC2Command(EC2CommandType.NOT_COMMAND,false);
 
