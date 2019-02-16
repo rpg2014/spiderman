@@ -28,7 +28,7 @@ public class DiscordWrapper {
         //TODO
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPost post = new HttpPost(DISCORD_URL);
-        post.setHeader("Content-Type", "application/json; charset=UTF-8");
+        //post.setHeader("Content-Type", "application/json; charset=UTF-8");
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
 
 
@@ -43,7 +43,7 @@ public class DiscordWrapper {
             post.setEntity(new UrlEncodedFormEntity(nameValuePair));
             httpResponse = httpclient.execute(post);
 
-            logger.logInfo("Discord request: " + httpResponse.getStatusLine(), className);
+            logger.logInfo("Discord request: " + httpResponse.getStatusLine()+"\n"+httpResponse.toString(), className);
 
             HttpEntity entity2 = httpResponse.getEntity();
             // do something useful with the response body

@@ -47,10 +47,10 @@ public class IronSpiderHandler implements HttpHandler {
                         String response = "Received";
                         int responseCode = 200;
                         sendResponse(httpExchange, response, responseCode);
-
+                        responseThread.join();
                     } else {
                         String response = "Received";
-                        int responseCode = 201;
+                        int responseCode = 202;
                         sendResponse(httpExchange, response, responseCode);
                     }
                 } else {
