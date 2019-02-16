@@ -34,12 +34,14 @@ public class IronSpiderHandler implements HttpHandler {
                         Thread responseThread = new Thread(() -> {
                             EC2Command com = command;
                             try {
-                                IronSpiderCommandRunner.execute(command.getCommand());
+                                logger.logInfo("Running Command",CLASS_NAME);
+                                IronSpiderCommandRunner.execute(com.getCommand());
                             }catch (InterruptedException e){
                                 logger.logError("Thread Interrupted: "+ e.getMessage(), CLASS_NAME);
                             }
 
                         });
+                        responseThread.start();
                         logger.logInfo("Received Command: " + command.getCommand().toString(), CLASS_NAME);
                         //return response
                         String response = "Received";

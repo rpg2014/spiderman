@@ -1,5 +1,6 @@
 package com.rpg2014.spiderman;
 
+import com.rpg2014.spiderman.logger.SpidermanLogger;
 import com.rpg2014.spiderman.types.EC2Command;
 import com.rpg2014.spiderman.types.EC2CommandType;
 import com.rpg2014.spiderman.wrapper.DiscordWrapper;
@@ -7,7 +8,7 @@ import com.rpg2014.spiderman.wrapper.SpidermanEC2Wrapper;
 
 public class IronSpiderCommandRunner {
     private static SpidermanEC2Wrapper ec2;
-
+    private static SpidermanLogger logger  = SpidermanLogger.getInstance();
     public static void execute(final EC2CommandType command)throws InterruptedException{
         switch (command){
             case START:
@@ -61,6 +62,7 @@ public class IronSpiderCommandRunner {
 
     private static void serverStatus(final String instanceId){
         lazyLoadEC2();
+        logger.logInfo("Getting status",IronSpiderCommandRunner.class.getSimpleName());
         boolean isUp = ec2.isInstanceUp(instanceId);
         if (isUp){
             String dnsName = ec2.getInstanceDomainName(instanceId);
