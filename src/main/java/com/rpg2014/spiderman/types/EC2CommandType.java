@@ -4,6 +4,7 @@ public enum EC2CommandType {
     START("start"),
     STOP("stop"),
     REBOOT("reboot"),
+    STATUS("status"),
     NOT_COMMAND("");
 
     String command;

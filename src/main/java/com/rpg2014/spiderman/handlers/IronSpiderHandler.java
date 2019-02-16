@@ -1,6 +1,7 @@
 package com.rpg2014.spiderman.handlers;
 
 
+import com.rpg2014.spiderman.IronSpiderCommandRunner;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 import com.rpg2014.spiderman.types.EC2Command;
 import com.rpg2014.spiderman.types.Webpage;
@@ -27,13 +28,18 @@ public class IronSpiderHandler implements HttpHandler {
                     logger.logInfo("json is: "+json,CLASS_NAME);
                     JSONObject obj = new JSONObject(json);
                     final String text = obj.getString("text");
-                    System.out.println(text);
+
                     final EC2Command command = EC2Command.parse(text);
                     if (command.isCommand()) {
-//                    Thread responseThread = new Thread(() -> {
-//                        EC2Command com = command;
-//                        EC2CommandRunner.execute(command);
-//                    });
+                        Thread responseThread = new Thread(() -> {
+                            EC2Command com = command;
+                            try {
+                                IronSpiderCommandRunner.execute(command.getCommand());
+                            }catch (InterruptedException e){
+                                logger.logError("Thread Interrupted: "+ e.getMessage(), CLASS_NAME);
+                            }
+
+                        });
                         logger.logInfo("Received Command: " + command.getCommand().toString(), CLASS_NAME);
                         //return response
                         String response = "Received";

@@ -10,6 +10,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
+import com.rpg2014.spiderman.wrapper.DiscordWrapper;
 
 public class SpidermanEC2Wrapper {
     private static SpidermanEC2Wrapper ourInstance = new SpidermanEC2Wrapper();
@@ -32,34 +33,41 @@ public class SpidermanEC2Wrapper {
 
         StartInstancesResult result = ec2Client.startInstances(request);
         InstanceState state = result.getStartingInstances().get(0).getCurrentState();
-        if (state.getCode() < 32){
-            DiscordWebhook.sendToDiscord("Starting Server");
-            return true;
-        }else {
-            DiscordWebhook.sendToDiscord("Unable to Start Server");
-            return false;
-        }
+        return state.getCode() < 32;
     }
 
     public boolean stopInstance(final String instanceId){
         StopInstancesRequest request = new StopInstancesRequest().withInstanceIds(instanceId);
         StopInstancesResult result = ec2Client.stopInstances(request);
         InstanceState state = result.getStoppingInstances().get(0).getCurrentState();
-        if(state.getCode() >= 32) {
-            DiscordWebhook.sendToDiscord("Stopping Server");
-            return true;
-        }else {
-            DiscordWebhook.sendToDiscord("Unable To Stop Server");
-            return false;
-        }
+        return state.getCode() >= 32;
     }
 
     public void rebootInstance(final String instanceId){
         RebootInstancesRequest request = new RebootInstancesRequest().withInstanceIds(instanceId);
         RebootInstancesResult result = ec2Client.rebootInstances(request);
         logger.logInfo(result.toString(),this.getClass().getSimpleName());
-        DiscordWebhook.sendToDiscord("Rebooting instance: "+instanceId);
+
     }
+
+    public String getInstanceDomainName(final String instanceId){
+        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+        DescribeInstancesResult result = ec2Client.describeInstances(request);
+        return result.getReservations().get(0).getInstances().get(0).getPublicDnsName();
+    }
+
+    public String getInstanceIp(final String instanceId){
+        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+        DescribeInstancesResult result = ec2Client.describeInstances(request);
+        return result.getReservations().get(0).getInstances().get(0).getPublicIpAddress();
+    }
+
+    public boolean isInstanceUp(final String instanceId){
+        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+        DescribeInstancesResult result = ec2Client.describeInstances(request);
+        return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
+    }
+
 
 
     private AWSCredentialsProvider getCredentials() {
