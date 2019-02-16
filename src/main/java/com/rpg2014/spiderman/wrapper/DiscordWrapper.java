@@ -43,7 +43,7 @@ public class DiscordWrapper {
             post.setEntity(new UrlEncodedFormEntity(nameValuePair));
             httpResponse = httpclient.execute(post);
 
-            logger.logInfo("Discord request: " + httpResponse.getStatusLine()+"\n"+httpResponse.toString(), className);
+            logger.logInfo("Discord request: " + httpResponse.getStatusLine(), className);
 
             HttpEntity entity2 = httpResponse.getEntity();
             // do something useful with the response body
