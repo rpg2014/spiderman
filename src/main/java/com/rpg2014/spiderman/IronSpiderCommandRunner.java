@@ -42,7 +42,7 @@ public class IronSpiderCommandRunner {
 
     private static void stopServer(final String instanceId) {
         lazyLoadEC2();
-        boolean success = ec2.startInstance(instanceId);
+        boolean success = ec2.stopInstance(instanceId);
         if (success) {
             DiscordWrapper.sendToDiscord("Stopping server");
         }else {
@@ -52,12 +52,8 @@ public class IronSpiderCommandRunner {
 
     private static void rebootServer(final String instanceId){
         lazyLoadEC2();
-        boolean success = ec2.startInstance(instanceId);
-        if (success) {
-            DiscordWrapper.sendToDiscord("Rebooting server");
-        }else {
-            DiscordWrapper.sendToDiscord("Unable to reboot server");
-        }
+        ec2.rebootInstance(instanceId);
+        DiscordWrapper.sendToDiscord("Rebooting server");
     }
 
     private static void serverStatus(final String instanceId){
