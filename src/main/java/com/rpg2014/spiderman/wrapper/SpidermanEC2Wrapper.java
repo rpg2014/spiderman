@@ -10,6 +10,7 @@ import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,7 +165,7 @@ public class SpidermanEC2Wrapper {
 //        String snapshotId = result.getSnapshot().getSnapshotId();
 //        serverDetails.setSnapshotId(snapshotId);
 
-        CreateImageRequest createImageRequest = new CreateImageRequest().withInstanceId(instanceId).withName("Minecraft-Backup");
+        CreateImageRequest createImageRequest = new CreateImageRequest().withInstanceId(instanceId).withName("Minecraft-Backup-"+ LocalDate.now());
         CreateImageResult createImageResult = ec2Client.createImage(createImageRequest);
         String amiId = createImageResult.getImageId();
 

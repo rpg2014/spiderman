@@ -33,7 +33,7 @@ public class IronSpiderCommandRunner {
             DiscordWrapper.sendToDiscord("Starting server");
             Thread.sleep(30000);
             if(ec2.isInstanceUp()){
-                DiscordWrapper.sendToDiscord("Server is up at: "+ec2.getInstanceDomainName() + ":25565");
+                DiscordWrapper.sendToDiscord("Server is up at: "+ec2.getInstanceDomainName() + ":25565.  Give it a few minutes to launch minecraft");
             }
         }else {
             DiscordWrapper.sendToDiscord("Unable to start server");
