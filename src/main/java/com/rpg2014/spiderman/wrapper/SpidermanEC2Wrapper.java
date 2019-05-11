@@ -29,7 +29,8 @@ public class SpidermanEC2Wrapper {
     private String oldSnapshotId;
 
     private static final String AMI_NAME = "Minecraft_Server";
-    private static final String USER_DATA = "(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
+    private static final String USER_DATA = "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
+    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
 
     private SpidermanEC2Wrapper() {
         if (Boolean.valueOf(System.getenv("ON_HEROKU")))
