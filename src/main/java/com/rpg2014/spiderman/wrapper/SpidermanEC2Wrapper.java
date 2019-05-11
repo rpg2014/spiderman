@@ -150,10 +150,10 @@ public class SpidermanEC2Wrapper {
     }
 
     private void deleteOldAmi(String oldAMIid, final String oldSnapshotId) {
-        DeleteSnapshotRequest deleteSnapshotRequest = new DeleteSnapshotRequest().withSnapshotId(oldSnapshotId);
-        ec2Client.deleteSnapshot(deleteSnapshotRequest);
         DeregisterImageRequest deregisterImageRequest = new DeregisterImageRequest().withImageId(oldAMIid);
         ec2Client.deregisterImage(deregisterImageRequest);
+        DeleteSnapshotRequest deleteSnapshotRequest = new DeleteSnapshotRequest().withSnapshotId(oldSnapshotId);
+        ec2Client.deleteSnapshot(deleteSnapshotRequest);
     }
 
     private String makeAMI(String instanceId) {
