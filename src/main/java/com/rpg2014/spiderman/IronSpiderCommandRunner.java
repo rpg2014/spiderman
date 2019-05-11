@@ -42,9 +42,10 @@ public class IronSpiderCommandRunner {
 
     private static void stopServer(final String instanceId) {
         lazyLoadEC2();
+        DiscordWrapper.sendToDiscord("Stopping server");
         boolean success = ec2.stopInstance();
         if (success) {
-            DiscordWrapper.sendToDiscord("Stopping server");
+            DiscordWrapper.sendToDiscord("Stopped server");
         }else {
             DiscordWrapper.sendToDiscord("Unable to stop server");
         }
