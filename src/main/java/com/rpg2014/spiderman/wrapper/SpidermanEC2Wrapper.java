@@ -18,6 +18,7 @@ public class SpidermanEC2Wrapper {
     private static final String SECURITY_GROUP_ID = "sg-0bcf97234db49f1d4";
     private static final String USER_DATA =
         "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
+    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
     private static SpidermanEC2Wrapper ourInstance = new SpidermanEC2Wrapper();
     private SpidermanLogger logger = SpidermanLogger.getInstance();
     private AmazonEC2 ec2Client;
@@ -38,7 +39,7 @@ public class SpidermanEC2Wrapper {
         oldAMIid = serverDetails.getAmiID();
         oldSnapshotId = serverDetails.getSnapshotId();
     }
-    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
+
 
     public static SpidermanEC2Wrapper getInstance() {
         return ourInstance;
@@ -147,7 +148,7 @@ public class SpidermanEC2Wrapper {
             amiId = importResult.getImportImageTasks().get(0).getImageId();
 
         } while (!amiId.isEmpty());
-
+        logger.logInfo("Created AMI, image id: "+ amiId, CLASS_NAME);
         return amiId;
     }
 
@@ -188,7 +189,13 @@ public class SpidermanEC2Wrapper {
         if(result.getReservations().size() == 0 || result.getReservations().get(0).getInstances().size() ==0){
             return false;
         }
-        return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
+        boolean isUp = result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
+        if(isUp){
+            logger.logInfo("Server instance "+ instanceId +" is up", CLASS_NAME);
+        }else {
+            logger.logInfo("Server instance "+ instanceId +" is down", CLASS_NAME);
+        }
+        return isUp
 
     }
 
