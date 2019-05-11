@@ -28,7 +28,7 @@ public class IronSpiderCommandRunner {
 
     private static void startServer(final String instanceId) throws InterruptedException{
         lazyLoadEC2();
-        boolean success = ec2.startInstance(instanceId);
+        boolean success = ec2.startInstance();
         if (success) {
             DiscordWrapper.sendToDiscord("Starting server");
             Thread.sleep(30000);
@@ -42,7 +42,7 @@ public class IronSpiderCommandRunner {
 
     private static void stopServer(final String instanceId) {
         lazyLoadEC2();
-        boolean success = ec2.stopInstance(instanceId);
+        boolean success = ec2.stopInstance();
         if (success) {
             DiscordWrapper.sendToDiscord("Stopping server");
         }else {
