@@ -101,6 +101,7 @@ public class SpidermanEC2Wrapper {
             serverDetails.setAmiId(amiId);
             serverDetails.setSnapshotId(getCurrentSnapshot());
 
+            waitforServerStop(instanceId);
             serverDetails.setServerStopped();
             if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId)) {
                 deleteOldAmi(oldAMIid, oldSnapshotId);
@@ -121,6 +122,16 @@ public class SpidermanEC2Wrapper {
             return false;
         }
 
+    }
+
+    private void waitforServerStop(String instanceId) {
+        do{
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }while(isInstanceUp());
     }
 
     private String getCurrentSnapshot() {
