@@ -12,6 +12,7 @@ import com.rpg2014.spiderman.logger.SpidermanLogger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SpidermanEC2Wrapper {
@@ -142,10 +143,20 @@ public class SpidermanEC2Wrapper {
     private String getCurrentSnapshot() {
         DescribeSnapshotsRequest request = new DescribeSnapshotsRequest();
         DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
-        for (Snapshot snapshot: result.getSnapshots()) {
-            if(!oldSnapshotId.equals(snapshot.getSnapshotId())) {
-               return snapshot.getSnapshotId();
+        if(result.getSnapshots().size() == 1) {
+            for (Snapshot snapshot : result.getSnapshots()) {
+                if (!oldSnapshotId.equals(snapshot.getSnapshotId())) {
+                    return snapshot.getSnapshotId();
+                }
             }
+        }else {
+            Snapshot newestSnap= new Snapshot().withStartTime(new Date(Long.MIN_VALUE));
+            for(Snapshot snapshot: result.getSnapshots()){
+                if(newestSnap.getStartTime().before(snapshot.getStartTime())) {
+                    newestSnap = snapshot;
+                }
+            }
+            return newestSnap.getSnapshotId();
         }
         return oldSnapshotId;
     }
