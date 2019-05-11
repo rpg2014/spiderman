@@ -46,7 +46,7 @@ public class SpidermanEC2Wrapper {
     }
 
     public boolean startInstance() {
-        if (!serverDetails.isServerRunning() || isInstanceUp()) {
+        if (!serverDetails.isServerRunning() || !isInstanceUp()) {
             String amiId = serverDetails.getAmiID();
 
             RunInstancesRequest runInstancesRequest = new RunInstancesRequest()
