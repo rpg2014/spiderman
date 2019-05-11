@@ -4,34 +4,26 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
-import com.rpg2014.spiderman.wrapper.DiscordWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpidermanEC2Wrapper {
+    private static final String AMI_NAME = "Minecraft_Server";
+    private static final String SECURITY_GROUP_ID = " sg-0bcf97234db49f1d4";
+    private static final String USER_DATA =
+        "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
     private static SpidermanEC2Wrapper ourInstance = new SpidermanEC2Wrapper();
-
-    public static SpidermanEC2Wrapper getInstance() {
-        return ourInstance;
-    }
-
     private SpidermanLogger logger = SpidermanLogger.getInstance();
     private AmazonEC2 ec2Client;
     private MinecraftDynamoWrapper serverDetails;
     private String oldAMIid;
     private String oldSnapshotId;
-
-    private static final String AMI_NAME = "Minecraft_Server";
-    private static final String SECURITY_GROUP_ID = " sg-0bcf97234db49f1d4";
-    private static final String USER_DATA = "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
-    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
 
     private SpidermanEC2Wrapper() {
         if (Boolean.valueOf(System.getenv("ON_HEROKU")))
@@ -45,9 +37,14 @@ public class SpidermanEC2Wrapper {
         oldAMIid = serverDetails.getAmiID();
         oldSnapshotId = serverDetails.getSnapshotId();
     }
+    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
+
+    public static SpidermanEC2Wrapper getInstance() {
+        return ourInstance;
+    }
 
     public boolean startInstance() {
-        if (!serverDetails.isServerRunning()) {
+        if (!serverDetails.isServerRunning() || isInstanceUp()) {
             String amiId = serverDetails.getAmiID();
 
             RunInstancesRequest runInstancesRequest = new RunInstancesRequest()
@@ -90,7 +87,7 @@ public class SpidermanEC2Wrapper {
     }
 
     public boolean stopInstance() {
-        if(serverDetails.isServerRunning()) {
+        if (serverDetails.isServerRunning() || isInstanceUp()) {
             String instanceId = serverDetails.getInstanceId();
 
             StopInstancesRequest request = new StopInstancesRequest().withInstanceIds(instanceId);
@@ -110,8 +107,10 @@ public class SpidermanEC2Wrapper {
             if (success)
                 serverDetails.setServerStopped();
             return success;
-        }else
+        } else {
             return false;
+        }
+
     }
 
     private void deleteOldAmi(String oldAMIid, final String oldSnapshotId) {
@@ -165,25 +164,26 @@ public class SpidermanEC2Wrapper {
 
     }
 
-    public String getInstanceDomainName(final String instanceId) {
+    public String getInstanceDomainName() {
+        String instanceId = serverDetails.getInstanceId();
         DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
         DescribeInstancesResult result = ec2Client.describeInstances(request);
         return result.getReservations().get(0).getInstances().get(0).getPublicDnsName();
     }
 
-    public String getInstanceIp(final String instanceId) {
+    public String getInstanceIp() {
+        String instanceId = serverDetails.getInstanceId();
         DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
         DescribeInstancesResult result = ec2Client.describeInstances(request);
         return result.getReservations().get(0).getInstances().get(0).getPublicIpAddress();
     }
 
     public boolean isInstanceUp() {
-        if(serverDetails.isServerRunning()) {
-            String instanceId = serverDetails.getInstanceId();
-            DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
-            DescribeInstancesResult result = ec2Client.describeInstances(request);
-            return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
-        }
+        String instanceId = serverDetails.getInstanceId();
+        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+        DescribeInstancesResult result = ec2Client.describeInstances(request);
+        return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
+
     }
 
     private AWSCredentialsProvider getCredentials() {
