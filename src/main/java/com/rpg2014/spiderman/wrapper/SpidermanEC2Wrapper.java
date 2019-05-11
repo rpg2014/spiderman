@@ -15,7 +15,7 @@ import java.util.List;
 
 public class SpidermanEC2Wrapper {
     private static final String AMI_NAME = "Minecraft_Server";
-    private static final String SECURITY_GROUP_ID = " sg-0bcf97234db49f1d4";
+    private static final String SECURITY_GROUP_ID = "sg-0bcf97234db49f1d4";
     private static final String USER_DATA =
         "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
     private static SpidermanEC2Wrapper ourInstance = new SpidermanEC2Wrapper();
@@ -24,6 +24,7 @@ public class SpidermanEC2Wrapper {
     private MinecraftDynamoWrapper serverDetails;
     private String oldAMIid;
     private String oldSnapshotId;
+    private static final String CLASS_NAME = SpidermanEC2Wrapper.class.getSimpleName();
 
     private SpidermanEC2Wrapper() {
         if (Boolean.valueOf(System.getenv("ON_HEROKU")))
@@ -67,6 +68,7 @@ public class SpidermanEC2Wrapper {
             InstanceState state = result.getStartingInstances().get(0).getCurrentState();
             boolean success = state.getCode() < 32;
             if (success) {
+                logger.logInfo("Started server",CLASS_NAME);
                 serverDetails.setServerRunning();
             }
             return success;
@@ -105,6 +107,7 @@ public class SpidermanEC2Wrapper {
             boolean success =
                 terminateInstancesResult.getTerminatingInstances().get(0).getCurrentState().getCode() > 32;
             if (success)
+                logger.logInfo("Terminated Server", CLASS_NAME);
                 serverDetails.setServerStopped();
             return success;
         } else {
@@ -136,7 +139,7 @@ public class SpidermanEC2Wrapper {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
-
+                logger.logError("Failed to save AMI", CLASS_NAME);
             }
             DescribeImportImageTasksRequest importRequest =
                 new DescribeImportImageTasksRequest().withImportTaskIds(importImageResult.getImportTaskId());
@@ -182,6 +185,9 @@ public class SpidermanEC2Wrapper {
         String instanceId = serverDetails.getInstanceId();
         DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
         DescribeInstancesResult result = ec2Client.describeInstances(request);
+        if(result.getReservations().size() == 0 || result.getReservations().get(0).getInstances().size() ==0){
+            return false;
+        }
         return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
 
     }
