@@ -43,11 +43,11 @@ public class MinecraftDynamoWrapper {
     }
 
     public void setServerRunning() {
-        table.putItem(new Item().with(SERVER_RUNNING, true));
+        table.putItem(new Item().with(ITEM_ID, SERVER_RUNNING).with(VALUE, true));
     }
 
     public void setServerStopped() {
-        table.putItem(new Item().with(SERVER_RUNNING, false));
+        table.putItem(new Item().with(ITEM_ID,SERVER_RUNNING).with(VALUE, false));
     }
 
     public String getSnapshotId() {
@@ -55,7 +55,7 @@ public class MinecraftDynamoWrapper {
     }
 
     public void setSnapshotId(final String snapshotId){
-        table.putItem(new Item().with(SNAPSHOT_ID, snapshotId));
+        table.putItem(new Item().with(ITEM_ID, SNAPSHOT_ID).with(VALUE, snapshotId));
     }
 
 
@@ -64,7 +64,7 @@ public class MinecraftDynamoWrapper {
     }
 
     public void setInstanceId(final String instanceId) {
-        table.putItem(new Item().with(INSTANCE_ID, instanceId));
+        table.putItem(new Item().with(ITEM_ID, INSTANCE_ID).with(VALUE, instanceId));
     }
 
     public String getAmiID() {
@@ -72,7 +72,7 @@ public class MinecraftDynamoWrapper {
     }
 
     public void setAmiId(final String amiId) {
-        table.putItem(new Item().with(AMI_ID, amiId));
+        table.putItem(new Item().with(ITEM_ID, AMI_ID).with(VALUE, amiId));
     }
 
 
