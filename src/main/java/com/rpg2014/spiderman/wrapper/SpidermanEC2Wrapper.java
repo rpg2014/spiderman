@@ -97,11 +97,16 @@ public class SpidermanEC2Wrapper {
             StopInstancesRequest request = new StopInstancesRequest().withInstanceIds(instanceId);
             StopInstancesResult result = ec2Client.stopInstances(request);
             String amiId = makeAMI(instanceId);
+
             serverDetails.setAmiId(amiId);
+            serverDetails.setSnapshotId(getCurrentSnapshot());
 
             serverDetails.setServerStopped();
-            if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId))
+            if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId)) {
                 deleteOldAmi(oldAMIid, oldSnapshotId);
+
+            }
+
 
             TerminateInstancesRequest terminateInstancesRequest =
                 new TerminateInstancesRequest().withInstanceIds(instanceId);
@@ -118,6 +123,17 @@ public class SpidermanEC2Wrapper {
 
     }
 
+    private String getCurrentSnapshot() {
+        DescribeSnapshotsRequest request = new DescribeSnapshotsRequest();
+        DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
+        for (Snapshot snapshot: result.getSnapshots()) {
+            if(!oldSnapshotId.equals(snapshot.getSnapshotId())) {
+               return snapshot.getSnapshotId();
+            }
+        }
+        return oldSnapshotId;
+    }
+
     private void deleteOldAmi(String oldAMIid, final String oldSnapshotId) {
         DeleteSnapshotRequest deleteSnapshotRequest = new DeleteSnapshotRequest().withSnapshotId(oldSnapshotId);
         ec2Client.deleteSnapshot(deleteSnapshotRequest);
@@ -126,29 +142,17 @@ public class SpidermanEC2Wrapper {
     }
 
     private String makeAMI(String instanceId) {
-        String volumeId = getVolumeId(instanceId);
-        CreateSnapshotRequest request =
-            new CreateSnapshotRequest().withVolumeId(volumeId).withDescription("MinecraftServer");
-        CreateSnapshotResult result = ec2Client.createSnapshot(request);
-        String snapshotId = result.getSnapshot().getSnapshotId();
-        serverDetails.setSnapshotId(snapshotId);
-        ImportImageRequest importImageRequest =
-            new ImportImageRequest().withDiskContainers(new ImageDiskContainer().withSnapshotId(snapshotId));
-        ImportImageResult importImageResult = ec2Client.importImage(importImageRequest);
+//        String volumeId = getVolumeId(instanceId);
+//        CreateSnapshotRequest request =
+//            new CreateSnapshotRequest().withVolumeId(volumeId).withDescription("MinecraftServer");
+//        CreateSnapshotResult result = ec2Client.createSnapshot(request);
+//        String snapshotId = result.getSnapshot().getSnapshotId();
+//        serverDetails.setSnapshotId(snapshotId);
 
-        String amiId = null;
-        do {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                logger.logError("Failed to save AMI", CLASS_NAME);
-            }
-            DescribeImportImageTasksRequest importRequest =
-                new DescribeImportImageTasksRequest().withImportTaskIds(importImageResult.getImportTaskId());
-            DescribeImportImageTasksResult importResult = ec2Client.describeImportImageTasks(importRequest);
-            amiId = importResult.getImportImageTasks().get(0).getImageId();
+        CreateImageRequest createImageRequest = new CreateImageRequest().withInstanceId(instanceId).withName("Minecraft-Backup");
+        CreateImageResult createImageResult = ec2Client.createImage(createImageRequest);
+        String amiId = createImageResult.getImageId();
 
-        } while (!amiId.isEmpty());
         logger.logInfo("Created AMI, image id: "+ amiId, CLASS_NAME);
         return amiId;
     }
