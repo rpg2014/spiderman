@@ -195,7 +195,7 @@ public class SpidermanEC2Wrapper {
         }else {
             logger.logInfo("Server instance "+ instanceId +" is down", CLASS_NAME);
         }
-        return isUp
+        return isUp;
 
     }
 
