@@ -32,8 +32,8 @@ public class IronSpiderCommandRunner {
         if (success) {
             DiscordWrapper.sendToDiscord("Starting server");
             Thread.sleep(30000);
-            if(ec2.isInstanceUp(instanceId)){
-                DiscordWrapper.sendToDiscord("Server is up at: "+ec2.getInstanceDomainName(instanceId));
+            if(ec2.isInstanceUp()){
+                DiscordWrapper.sendToDiscord("Server is up at: "+ec2.getInstanceDomainName());
             }
         }else {
             DiscordWrapper.sendToDiscord("Unable to start server");
@@ -59,10 +59,10 @@ public class IronSpiderCommandRunner {
     private static void serverStatus(final String instanceId){
         lazyLoadEC2();
         logger.logInfo("Getting status",IronSpiderCommandRunner.class.getSimpleName());
-        boolean isUp = ec2.isInstanceUp(instanceId);
+        boolean isUp = ec2.isInstanceUp();
         if (isUp){
-            String dnsName = ec2.getInstanceDomainName(instanceId);
-            String ip = ec2.getInstanceIp(instanceId);
+            String dnsName = ec2.getInstanceDomainName();
+            String ip = ec2.getInstanceIp();
             DiscordWrapper.sendToDiscord("Server is up at address: "+dnsName +"; and ip: "+ip);
         }else {
             DiscordWrapper.sendToDiscord("Server is down");
