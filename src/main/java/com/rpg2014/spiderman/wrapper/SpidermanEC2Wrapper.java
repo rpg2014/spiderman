@@ -103,6 +103,7 @@ public class SpidermanEC2Wrapper {
 
             waitforServerStop(instanceId);
             serverDetails.setServerStopped();
+            logger.logInfo("Server Stopped",CLASS_NAME);
             if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId)) {
                 deleteOldAmi(oldAMIid, oldSnapshotId);
 
@@ -125,9 +126,10 @@ public class SpidermanEC2Wrapper {
     }
 
     private void waitforServerStop(String instanceId) {
+        logger.logInfo("Waiting for instance "+ instanceId+ "to stop", CLASS_NAME);
         do{
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
