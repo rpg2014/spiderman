@@ -135,7 +135,7 @@ public class SpidermanEC2Wrapper {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }while(isInstanceUp());
+        }while(isInstanceStopped(instanceId));
     }
 
     private String getCurrentSnapshot() {
@@ -217,6 +217,18 @@ public class SpidermanEC2Wrapper {
         }
         return isUp;
 
+    }
+
+    private boolean isInstanceStopped(String instanceId){
+        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+        DescribeInstancesResult result = ec2Client.describeInstances(request);
+        if(result.getReservations().size() == 0 || result.getReservations().get(0).getInstances().size() ==0){
+            return true;
+        }
+        boolean isDown = result.getReservations().get(0).getInstances().get(0).getState().getCode() == 80;
+        if(isDown)
+            logger.logInfo("Server Instance "+ instanceId + "is down", CLASS_NAME);
+        return isDown;
     }
 
     private AWSCredentialsProvider getCredentials() {
