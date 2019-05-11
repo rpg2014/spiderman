@@ -29,6 +29,7 @@ public class SpidermanEC2Wrapper {
     private String oldSnapshotId;
 
     private static final String AMI_NAME = "Minecraft_Server";
+    private static final String SECURITY_GROUP_ID = " sg-0bcf97234db49f1d4";
     private static final String USER_DATA = "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
     //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
 
@@ -55,6 +56,7 @@ public class SpidermanEC2Wrapper {
                 .withMinCount(1)
                 .withUserData(USER_DATA)
                 .withInstanceType("t3.small")
+                .withSecurityGroupIds(SECURITY_GROUP_ID)
                 .withKeyName("Minecraft Server");
 
             RunInstancesResult runInstancesResult = ec2Client.runInstances(runInstancesRequest);
@@ -175,10 +177,13 @@ public class SpidermanEC2Wrapper {
         return result.getReservations().get(0).getInstances().get(0).getPublicIpAddress();
     }
 
-    public boolean isInstanceUp(final String instanceId) {
-        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
-        DescribeInstancesResult result = ec2Client.describeInstances(request);
-        return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
+    public boolean isInstanceUp() {
+        if(serverDetails.isServerRunning()) {
+            String instanceId = serverDetails.getInstanceId();
+            DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+            DescribeInstancesResult result = ec2Client.describeInstances(request);
+            return result.getReservations().get(0).getInstances().get(0).getState().getCode() == 16;
+        }
     }
 
     private AWSCredentialsProvider getCredentials() {
