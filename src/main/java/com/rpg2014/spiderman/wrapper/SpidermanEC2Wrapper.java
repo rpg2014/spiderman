@@ -135,7 +135,7 @@ public class SpidermanEC2Wrapper {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }while(isInstanceStopped(instanceId));
+        }while(!isInstanceStopped(instanceId));
     }
 
     private String getCurrentSnapshot() {
