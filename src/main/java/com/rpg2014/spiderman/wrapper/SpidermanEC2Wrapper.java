@@ -19,7 +19,7 @@ public class SpidermanEC2Wrapper {
         return ourInstance;
     }
     private SpidermanLogger logger = SpidermanLogger.getInstance();
-    private static AmazonEC2 ec2Client;
+    private AmazonEC2 ec2Client;
     private SpidermanEC2Wrapper() {
         if(Boolean.valueOf(System.getenv("ON_HEROKU")))
             this.ec2Client = AmazonEC2ClientBuilder.standard().withCredentials(getCredentials()).withRegion(Regions.US_EAST_1).build();

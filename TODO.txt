@@ -1,0 +1,30 @@
+Attach and detach ebs on server start so we can use the launch script
+Things to do before:
+    1. look into minecraft server and see where its getting the world from. 
+        and command to start server
+Steps for Start:
+1. RunInstance api call.  Give it a key pair? and AMI from dynamodb.  It returns array of instances
+    Params:
+        Shutdown Behavior: Terminate
+        Instance size?: t3.small?
+        AMI image id: grabbed from dynamo db
+        Min and Max count: 1
+        User Data: launch the minecraft server and do cron job for pinging discord bot
+            Commands:
+                cron job: (crontab -l 2>/dev/null; echo "*/5 *   *   *   *   wget -q -O - "https://path.com/to/discord/bot" >/dev/null 2>&1") | crontab -
+        Key name: minecraft server one, may need to find the id and hardcode or store it
+        Everything else should come with the AMI
+2. Enable Termination Protection on EC2 instance: maybe?
+    Store Instance ID in dynamo
+3. Start Instance api call, Using instance returned from RunInstance
+*  Give ip address to Discord
+
+Steps for stopping:
+    Grab instance Id and from Dynamo, 
+    use describe instances to get the volume id
+1.  Create snapstop of the root volume
+2.  Register a new AMI using the snapshot
+3.  Store AMI and snapshotID in dynamoDb
+4.  Stop EC2
+    Delete old AMI and Snapshot
+5.  release instance
