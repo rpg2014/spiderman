@@ -18,7 +18,7 @@ public class SpidermanEC2Wrapper {
     private static final String SECURITY_GROUP_ID = "sg-0bcf97234db49f1d4";
     private static final String USER_DATA =
         "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
-    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"https://iron-spider.herokuapp.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
+    //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"url.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
     private static SpidermanEC2Wrapper ourInstance = new SpidermanEC2Wrapper();
     private SpidermanLogger logger = SpidermanLogger.getInstance();
     private AmazonEC2 ec2Client;
@@ -96,13 +96,15 @@ public class SpidermanEC2Wrapper {
 
             StopInstancesRequest request = new StopInstancesRequest().withInstanceIds(instanceId);
             StopInstancesResult result = ec2Client.stopInstances(request);
+
+            waitforServerStop(instanceId);
+            serverDetails.setServerStopped();
             String amiId = makeAMI(instanceId);
 
             serverDetails.setAmiId(amiId);
             serverDetails.setSnapshotId(getCurrentSnapshot());
 
-            waitforServerStop(instanceId);
-            serverDetails.setServerStopped();
+
             logger.logInfo("Server Stopped",CLASS_NAME);
             if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId)) {
                 deleteOldAmi(oldAMIid, oldSnapshotId);
