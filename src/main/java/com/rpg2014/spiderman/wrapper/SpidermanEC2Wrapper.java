@@ -124,7 +124,7 @@ public class SpidermanEC2Wrapper {
             new CreateSnapshotRequest().withVolumeId(volumeId).withDescription("MinecraftServer");
         CreateSnapshotResult result = ec2Client.createSnapshot(request);
         String snapshotId = result.getSnapshot().getSnapshotId();
-
+        serverDetails.setSnapshotId(snapshotId);
         ImportImageRequest importImageRequest =
             new ImportImageRequest().withDiskContainers(new ImageDiskContainer().withSnapshotId(snapshotId));
         ImportImageResult importImageResult = ec2Client.importImage(importImageRequest);
