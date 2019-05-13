@@ -10,6 +10,7 @@ import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.*;
 import com.rpg2014.spiderman.logger.SpidermanLogger;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.List;
 public class SpidermanEC2Wrapper {
     private static final String AMI_NAME = "Minecraft_Server";
     private static final String SECURITY_GROUP_ID = "sg-0bcf97234db49f1d4";
+    private static final String AWS_ACCOUNT_ID = System.getenv("AWS_ACCOUNT_ID");
     private static final String USER_DATA =
         "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
     //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"url.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
@@ -141,7 +143,7 @@ public class SpidermanEC2Wrapper {
     }
 
     private String getCurrentSnapshot() {
-        DescribeSnapshotsRequest request = new DescribeSnapshotsRequest();
+        DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID);
         DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
         if(result.getSnapshots().size() == 1) {
             for (Snapshot snapshot : result.getSnapshots()) {
@@ -176,7 +178,8 @@ public class SpidermanEC2Wrapper {
 //        String snapshotId = result.getSnapshot().getSnapshotId();
 //        serverDetails.setSnapshotId(snapshotId);
 
-        CreateImageRequest createImageRequest = new CreateImageRequest().withInstanceId(instanceId).withName("Minecraft-Backup-"+ LocalDate.now());
+        CreateImageRequest createImageRequest = new CreateImageRequest().withInstanceId(instanceId).withName(AMI_NAME+ "-" + Instant
+            .now().hashCode());
         CreateImageResult createImageResult = ec2Client.createImage(createImageRequest);
         String amiId = createImageResult.getImageId();
 
