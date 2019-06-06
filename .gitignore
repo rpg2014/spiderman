@@ -20,7 +20,7 @@ website.html
 .dadbotId
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
-
+*.class
 classpath.txt
 test-classpath.txt
 javaconfig.json
@@ -32,3 +32,4 @@ javaconfig.json
 .botId
 target/*.jar
 /target/
+spiderman.iml

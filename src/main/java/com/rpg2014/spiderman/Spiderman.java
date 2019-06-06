@@ -4,6 +4,7 @@ package com.rpg2014.spiderman;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import com.rpg2014.spiderman.handlers.IronSpiderHandler;
 import com.rpg2014.spiderman.handlers.SpidermanHandler;
 import com.rpg2014.spiderman.handlers.SpidermanHelpPageHandler;
 import com.rpg2014.spiderman.handlers.SpidermanQuotePageHandler;
@@ -16,7 +17,6 @@ import com.sun.net.httpserver.HttpServer;
 public class Spiderman{
 
     private static final String className = Spiderman.class.getSimpleName();
-    private static Spiderman ourInstance;
     private static HttpServer server;
     private static SpidermanLogger logger = SpidermanLogger.getInstance();
 
@@ -41,6 +41,7 @@ public class Spiderman{
             server.createContext("/requests", new SpidermanHandler());
             server.createContext("/quotes",new SpidermanQuotePageHandler());
             server.createContext("/help", new SpidermanHelpPageHandler());
+            server.createContext("/discord",new IronSpiderHandler());
             server.setExecutor(null); // creates a default executor
             server.start();
             }catch (IOException e ){
