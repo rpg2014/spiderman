@@ -104,6 +104,7 @@ public class SpidermanEC2Wrapper {
             waitforServerStop(instanceId);
             serverDetails.setServerStopped();
             String amiId = makeAMI(instanceId);
+            waitForAmiToBeCreated();
 
             serverDetails.setAmiId(amiId);
             serverDetails.setSnapshotId(getCurrentSnapshot());
@@ -131,6 +132,14 @@ public class SpidermanEC2Wrapper {
 
     }
 
+    private void waitForAmiToBeCreated() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void waitforServerStop(String instanceId) {
         logger.logInfo("Waiting for instance "+ instanceId+ "to stop", CLASS_NAME);
         do{
@@ -142,33 +151,20 @@ public class SpidermanEC2Wrapper {
         }while(!isInstanceStopped(instanceId));
     }
 
-    private String getCurrentSnapshot() {
+    private String getNewestSnapshot() {
         DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID.replaceAll("-",""));
         DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
         logger.logInfo("result="+result.toString(),CLASS_NAME);
-        if(result != null && result.getSnapshots().size() == 1) {
-            for (Snapshot snapshot : result.getSnapshots()) {
-                logger.logInfo("old snapshot id=" +oldSnapshotId + "\t|\trequestSnapId="+snapshot.getSnapshotId(),CLASS_NAME);
-                if (!oldSnapshotId.equals(snapshot.getSnapshotId())) {
-                    logger.logInfo("Current Snapshot is " + snapshot.getSnapshotId(), CLASS_NAME);
-                    return snapshot.getSnapshotId();
-                }
+        Snapshot newestSnap= new Snapshot().withStartTime(new Date(Long.MIN_VALUE));
+        logger.logInfo("Listing snapshots", CLASS_NAME);
+        for(Snapshot snapshot: result.getSnapshots()){
+            logger.logInfo("Snapshot_id="+snapshot.getSnapshotId() + ", Owner_alias=" + snapshot.getOwnerAlias(), CLASS_NAME);
+            if(newestSnap.getStartTime().before(snapshot.getStartTime())) {
+                newestSnap = snapshot;
             }
-        }else {
-            Snapshot newestSnap= new Snapshot().withStartTime(new Date(Long.MIN_VALUE));
-            logger.logInfo("Listing snapshots", CLASS_NAME);
-            for(Snapshot snapshot: result.getSnapshots()){
-                logger.logInfo("Snapshot_id="+snapshot.getSnapshotId() + ", Owner_alias=" + snapshot.getOwnerAlias(), CLASS_NAME);
-                if(newestSnap.getStartTime().before(snapshot.getStartTime())) {
-                    newestSnap = snapshot;
-                }
-            }
-            logger.logInfo("Current Snapshot is " + newestSnap.getSnapshotId(), CLASS_NAME);
-            return newestSnap.getSnapshotId();
         }
-        logger.logInfo("Describe Snapshot did not return anything", CLASS_NAME);
-        logger.logInfo("Current Snapshot is " + oldSnapshotId, CLASS_NAME);
-        return oldSnapshotId;
+        logger.logInfo("Current Snapshot is " + newestSnap.getSnapshotId(), CLASS_NAME);
+        return newestSnap.getSnapshotId();
     }
 
     private void deleteOldAmi(String oldAMIid, final String oldSnapshotId) {
