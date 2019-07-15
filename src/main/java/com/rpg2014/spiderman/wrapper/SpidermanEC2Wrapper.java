@@ -58,7 +58,7 @@ public class SpidermanEC2Wrapper {
                 .withMaxCount(1)
                 .withMinCount(1)
                 .withUserData(USER_DATA)
-                .withInstanceType("t3a.medium")
+                .withInstanceType("c5.large")
                 .withSecurityGroupIds(SECURITY_GROUP_ID)
                 .withCreditSpecification(new CreditSpecificationRequest().withCpuCredits("standard"))
                 .withKeyName("Minecraft Server");
