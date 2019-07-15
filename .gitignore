@@ -32,4 +32,5 @@ javaconfig.json
 .botId
 target/*.jar
 /target/
+.idea/
 spiderman.iml

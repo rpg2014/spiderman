@@ -153,7 +153,9 @@ public class SpidermanEC2Wrapper {
             }
         }else {
             Snapshot newestSnap= new Snapshot().withStartTime(new Date(Long.MIN_VALUE));
+            logger.logInfo("Listing snapshots", CLASS_NAME);
             for(Snapshot snapshot: result.getSnapshots()){
+                logger.logInfo("Snapshot_id="+snapshot.getSnapshotId() + ", Owner_alias=" + snapshot.getOwnerAlias(), CLASS_NAME);
                 if(newestSnap.getStartTime().before(snapshot.getStartTime())) {
                     newestSnap = snapshot;
                 }
