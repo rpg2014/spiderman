@@ -148,6 +148,7 @@ public class SpidermanEC2Wrapper {
         if(result != null && result.getSnapshots().size() == 1) {
             for (Snapshot snapshot : result.getSnapshots()) {
                 if (!oldSnapshotId.equals(snapshot.getSnapshotId())) {
+                    logger.logInfo("Current Snapshot is " + snapshot.getSnapshotId();, CLASS_NAME);
                     return snapshot.getSnapshotId();
                 }
             }
@@ -158,8 +159,11 @@ public class SpidermanEC2Wrapper {
                     newestSnap = snapshot;
                 }
             }
+            logger.logInfo("Current Snapshot is " + snapshot.getSnapshotId();, CLASS_NAME);
             return newestSnap.getSnapshotId();
         }
+        logger.logInfo("Describe Snapshot did not return anything", CLASS_NAME);
+        logger.logInfo("Current Snapshot is " + snapshot.getSnapshotId();, CLASS_NAME);
         return oldSnapshotId;
     }
 
