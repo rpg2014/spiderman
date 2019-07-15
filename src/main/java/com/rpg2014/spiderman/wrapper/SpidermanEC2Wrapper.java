@@ -145,6 +145,7 @@ public class SpidermanEC2Wrapper {
     private String getCurrentSnapshot() {
         DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID.replaceAll("-",""));
         DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
+        logger.logInfo("result="+result.toString(),CLASS_NAME);
         if(result != null && result.getSnapshots().size() == 1) {
             for (Snapshot snapshot : result.getSnapshots()) {
                 if (!oldSnapshotId.equals(snapshot.getSnapshotId())) {
