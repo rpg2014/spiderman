@@ -111,8 +111,8 @@ public class SpidermanEC2Wrapper {
 
             logger.logInfo("Server Stopped",CLASS_NAME);
             if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId)) {
+                logger.logInfo("Deleting old ami id "+ oldAMIid, CLASS_NAME);
                 deleteOldAmi(oldAMIid, oldSnapshotId);
-
             }
 
 
@@ -148,6 +148,7 @@ public class SpidermanEC2Wrapper {
         logger.logInfo("result="+result.toString(),CLASS_NAME);
         if(result != null && result.getSnapshots().size() == 1) {
             for (Snapshot snapshot : result.getSnapshots()) {
+                logger.logInfo("old snapshot id=" +oldSnapshotId + "\t|\trequestSnapId="+snapshot.getSnapshotId(),CLASS_NAME);
                 if (!oldSnapshotId.equals(snapshot.getSnapshotId())) {
                     logger.logInfo("Current Snapshot is " + snapshot.getSnapshotId(), CLASS_NAME);
                     return snapshot.getSnapshotId();
