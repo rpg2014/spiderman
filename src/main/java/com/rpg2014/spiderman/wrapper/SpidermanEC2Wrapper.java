@@ -58,7 +58,7 @@ public class SpidermanEC2Wrapper {
                 .withMaxCount(1)
                 .withMinCount(1)
                 .withUserData(USER_DATA)
-                .withInstanceType("t3.small")
+                .withInstanceType("t3a.medium")
                 .withSecurityGroupIds(SECURITY_GROUP_ID)
                 .withCreditSpecification(new CreditSpecificationRequest().withCpuCredits("standard"))
                 .withKeyName("Minecraft Server");
@@ -145,7 +145,7 @@ public class SpidermanEC2Wrapper {
     private String getCurrentSnapshot() {
         DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID);
         DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
-        if(result.getSnapshots().size() == 1) {
+        if(result != null && result.getSnapshots().size() == 1) {
             for (Snapshot snapshot : result.getSnapshots()) {
                 if (!oldSnapshotId.equals(snapshot.getSnapshotId())) {
                     return snapshot.getSnapshotId();
