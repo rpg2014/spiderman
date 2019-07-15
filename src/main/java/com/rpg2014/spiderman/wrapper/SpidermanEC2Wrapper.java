@@ -21,6 +21,7 @@ public class SpidermanEC2Wrapper {
     private static final String AMI_NAME = "Minecraft_Server";
     private static final String SECURITY_GROUP_ID = "sg-0bcf97234db49f1d4";
     private static final String AWS_ACCOUNT_ID = System.getenv("AWS_ACCOUNT_ID");
+    private static final String INSTANCE_TYPE = System.getenv("EC2_INSTANCE_TYPE");
     private static final String USER_DATA =
         "KGNyb250YWIgLWwgMj4vZGV2L251bGw7IGVjaG8gIiovNSAqICAgKiAgICogICAqICAgd2dldCAtcSAtTyAtICJodHRwczovL2lyb24tc3BpZGVyLmhlcm9rdWFwcC5jb20iID4vZGV2L251bGwgMj4mMSIpIHwgY3JvbnRhYiAtCnNoIG1pbmVjcmFmdC9ydW5fc2VydmVyLnNo";
     //"(crontab -l 2>/dev/null; echo \"*/5 *   *   *   *   wget -q -O - \"url.com\" >/dev/null 2>&1\") | crontab -\nsh minecraft/run_server.sh";
@@ -59,7 +60,7 @@ public class SpidermanEC2Wrapper {
                 .withMaxCount(1)
                 .withMinCount(1)
                 .withUserData(USER_DATA)
-                .withInstanceType("c5.large")
+                .withInstanceType(INSTANCE_TYPE)
                 .withSecurityGroupIds(SECURITY_GROUP_ID)
                 //.withCreditSpecification(new CreditSpecificationRequest().withCpuCredits("standard"))
                 .withKeyName("Minecraft Server");
@@ -137,6 +138,11 @@ public class SpidermanEC2Wrapper {
         DescribeSnapshotsResult result;
         List<Snapshot> finishedSnapshots = new ArrayList<>();
         do{
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID.replaceAll("-",""));
             result = ec2Client.describeSnapshots(request);
             if (result.getSnapshots().size() > 1) {
