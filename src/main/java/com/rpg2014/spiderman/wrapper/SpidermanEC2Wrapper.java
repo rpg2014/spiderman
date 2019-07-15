@@ -60,7 +60,7 @@ public class SpidermanEC2Wrapper {
                 .withUserData(USER_DATA)
                 .withInstanceType("c5.large")
                 .withSecurityGroupIds(SECURITY_GROUP_ID)
-                .withCreditSpecification(new CreditSpecificationRequest().withCpuCredits("standard"))
+                //.withCreditSpecification(new CreditSpecificationRequest().withCpuCredits("standard"))
                 .withKeyName("Minecraft Server");
 
             RunInstancesResult runInstancesResult = ec2Client.runInstances(runInstancesRequest);
