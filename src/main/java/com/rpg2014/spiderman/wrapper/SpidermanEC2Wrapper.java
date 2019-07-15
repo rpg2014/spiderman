@@ -103,7 +103,7 @@ public class SpidermanEC2Wrapper {
             StopInstancesRequest request = new StopInstancesRequest().withInstanceIds(instanceId);
             ec2Client.stopInstances(request);
 
-            waitforServerStop(instanceId);
+            waitForServerStop(instanceId);
             serverDetails.setServerStopped();
             String amiId = makeAMI(instanceId);
             waitForSnapshotToBeCreated();
@@ -114,7 +114,7 @@ public class SpidermanEC2Wrapper {
 
             logger.logInfo("Server Stopped",CLASS_NAME);
             if (!serverDetails.getAmiID().equals(oldAMIid) && !serverDetails.getSnapshotId().equals(oldSnapshotId)) {
-                logger.logInfo("Deleting old ami id "+ oldAMIid, CLASS_NAME);
+                logger.logInfo("Deleting old snapshot_id "+ oldSnapshotId, CLASS_NAME);
                 deleteOldAmi(oldAMIid, oldSnapshotId);
             }
 
@@ -153,7 +153,7 @@ public class SpidermanEC2Wrapper {
 
     }
 
-    private void waitforServerStop(String instanceId) {
+    private void waitForServerStop(String instanceId) {
         logger.logInfo("Waiting for instance "+ instanceId+ "to stop", CLASS_NAME);
         do{
             try {
@@ -161,22 +161,19 @@ public class SpidermanEC2Wrapper {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }while(!isInstanceStopped(instanceId));
+        }while(!isInstanceStopped());
     }
 
     private String getNewestSnapshot() {
         DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID.replaceAll("-",""));
         DescribeSnapshotsResult result = ec2Client.describeSnapshots(request);
-        logger.logInfo("result="+result.toString(),CLASS_NAME);
         Snapshot newestSnap= new Snapshot().withStartTime(new Date(Long.MIN_VALUE));
-        logger.logInfo("Listing snapshots", CLASS_NAME);
         for(Snapshot snapshot: result.getSnapshots()){
-            logger.logInfo("Snapshot_id="+snapshot.getSnapshotId() + ", Owner_alias=" + snapshot.getOwnerAlias(), CLASS_NAME);
             if(newestSnap.getStartTime().before(snapshot.getStartTime())) {
                 newestSnap = snapshot;
             }
         }
-        logger.logInfo("Current Snapshot is " + newestSnap.getSnapshotId(), CLASS_NAME);
+        logger.logInfo("Newest Snapshot is " + newestSnap.getSnapshotId(), CLASS_NAME);
         return newestSnap.getSnapshotId();
     }
 
@@ -188,12 +185,6 @@ public class SpidermanEC2Wrapper {
     }
 
     private String makeAMI(String instanceId) {
-//        String volumeId = getVolumeId(instanceId);
-//        CreateSnapshotRequest request =
-//            new CreateSnapshotRequest().withVolumeId(volumeId).withDescription("MinecraftServer");
-//        CreateSnapshotResult result = ec2Client.createSnapshot(request);
-//        String snapshotId = result.getSnapshot().getSnapshotId();
-//        serverDetails.setSnapshotId(snapshotId);
 
         CreateImageRequest createImageRequest = new CreateImageRequest().withInstanceId(instanceId).withName(AMI_NAME+ "-" + Instant
             .now().hashCode());
@@ -204,20 +195,14 @@ public class SpidermanEC2Wrapper {
         return amiId;
     }
 
-    private String getVolumeId(String instanceId) {
-        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
-        DescribeInstancesResult result = ec2Client.describeInstances(request);
-
-        String volumeId = result.getReservations().get(0).getInstances().get(0).getBlockDeviceMappings().get(0).getEbs()
-            .getVolumeId();
-        return volumeId;
-    }
-
-    public void rebootInstance(final String instanceId) {
-        RebootInstancesRequest request = new RebootInstancesRequest().withInstanceIds(instanceId);
-        RebootInstancesResult result = ec2Client.rebootInstances(request);
-        logger.logInfo(result.toString(), this.getClass().getSimpleName());
-
+    public void rebootInstance() {
+        if(serverDetails.isServerRunning()) {
+            RebootInstancesRequest request = new RebootInstancesRequest().withInstanceIds(serverDetails.getInstanceId());
+            RebootInstancesResult result = ec2Client.rebootInstances(request);
+            logger.logInfo(result.toString(), this.getClass().getSimpleName());
+        }else {
+            logger.logInfo("Server isn't up to be rebooted", CLASS_NAME);
+        }
     }
 
     public String getInstanceDomainName() {
@@ -251,15 +236,15 @@ public class SpidermanEC2Wrapper {
 
     }
 
-    private boolean isInstanceStopped(String instanceId){
-        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(instanceId);
+    private boolean isInstanceStopped(){
+        DescribeInstancesRequest request = new DescribeInstancesRequest().withInstanceIds(serverDetails.getInstanceId());
         DescribeInstancesResult result = ec2Client.describeInstances(request);
         if(result.getReservations().size() == 0 || result.getReservations().get(0).getInstances().size() ==0){
             return true;
         }
         boolean isDown = result.getReservations().get(0).getInstances().get(0).getState().getCode() == 80;
         if(isDown)
-            logger.logInfo("Server Instance "+ instanceId + "is down", CLASS_NAME);
+            logger.logInfo("Server Instance "+ serverDetails.getInstanceId() + "is down", CLASS_NAME);
         return isDown;
     }
 

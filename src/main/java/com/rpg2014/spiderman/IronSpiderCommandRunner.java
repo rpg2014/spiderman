@@ -12,21 +12,21 @@ public class IronSpiderCommandRunner {
     public static void execute(final EC2CommandType command)throws InterruptedException{
         switch (command){
             case START:
-                startServer(System.getenv("INSTANCE_ID"));
+                startServer();
                 break;
             case STOP:
-                stopServer(System.getenv("INSTANCE_ID"));
+                stopServer();
                 break;
             case REBOOT:
-                rebootServer(System.getenv("INSTANCE_ID"));
+                rebootServer();
                 break;
             case STATUS:
-                serverStatus(System.getenv("INSTANCE_ID"));
+                serverStatus();
                 break;
         }
     }
 
-    private static void startServer(final String instanceId) throws InterruptedException{
+    private static void startServer() throws InterruptedException{
         lazyLoadEC2();
         boolean success = ec2.startInstance();
         if (success) {
@@ -40,7 +40,7 @@ public class IronSpiderCommandRunner {
         }
     }
 
-    private static void stopServer(final String instanceId) {
+    private static void stopServer() {
         lazyLoadEC2();
         DiscordWrapper.sendToDiscord("Stopping server");
         boolean success = ec2.stopInstance();
@@ -51,13 +51,13 @@ public class IronSpiderCommandRunner {
         }
     }
 
-    private static void rebootServer(final String instanceId){
+    private static void rebootServer(){
         lazyLoadEC2();
-        ec2.rebootInstance(instanceId);
+        ec2.rebootInstance();
         DiscordWrapper.sendToDiscord("Rebooting server");
     }
 
-    private static void serverStatus(final String instanceId){
+    private static void serverStatus(){
         lazyLoadEC2();
         logger.logInfo("Getting status",IronSpiderCommandRunner.class.getSimpleName());
         boolean isUp = ec2.isInstanceUp();

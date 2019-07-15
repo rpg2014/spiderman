@@ -57,7 +57,7 @@ public class SpidermanQuotePageHandler implements HttpHandler {
 					os.write(response.getBytes());
 					os.close();
 				} else if (params.containsKey("pss") && params.containsKey("quoteToRemove")
-						&& params.get("pss").equalsIgnoreCase("supersecretpassword")) {
+						&& params.get("pss").equalsIgnoreCase(System.getenv("QUOTE_PASS"))) {
 					handleQuoteRemove(params);
 					String response = "OK";
 					int responseCode = 303;
