@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SpidermanEC2Wrapper {
     private static final String AMI_NAME = "Minecraft_Server";
@@ -99,12 +100,12 @@ public class SpidermanEC2Wrapper {
             String instanceId = serverDetails.getInstanceId();
 
             StopInstancesRequest request = new StopInstancesRequest().withInstanceIds(instanceId);
-            StopInstancesResult result = ec2Client.stopInstances(request);
+            ec2Client.stopInstances(request);
 
             waitforServerStop(instanceId);
             serverDetails.setServerStopped();
             String amiId = makeAMI(instanceId);
-            waitForAmiToBeCreated();
+            waitForSnapshotToBeCreated();
 
             serverDetails.setAmiId(amiId);
             serverDetails.setSnapshotId(getNewestSnapshot());
@@ -132,12 +133,18 @@ public class SpidermanEC2Wrapper {
 
     }
 
-    private void waitForAmiToBeCreated() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void waitForSnapshotToBeCreated() {
+        DescribeSnapshotsResult result;
+        List<Snapshot> finishedSnapshots = new ArrayList<>();
+        do{
+            DescribeSnapshotsRequest request = new DescribeSnapshotsRequest().withOwnerIds(AWS_ACCOUNT_ID.replaceAll("-",""));
+            result = ec2Client.describeSnapshots(request);
+            if (result.getSnapshots().size() > 1) {
+                finishedSnapshots = result.getSnapshots().stream().filter(snapshot -> snapshot.getProgress().contains("100")).collect(Collectors.toList());
+            }
+        }while(result.getSnapshots().size()>1 && finishedSnapshots.size() == result.getSnapshots().size());
+
+
     }
 
     private void waitforServerStop(String instanceId) {
