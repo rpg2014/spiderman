@@ -107,7 +107,7 @@ public class SpidermanEC2Wrapper {
             waitForAmiToBeCreated();
 
             serverDetails.setAmiId(amiId);
-            serverDetails.setSnapshotId(getCurrentSnapshot());
+            serverDetails.setSnapshotId(getNewestSnapshot());
 
 
             logger.logInfo("Server Stopped",CLASS_NAME);
