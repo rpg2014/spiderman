@@ -27,7 +27,7 @@ javaconfig.json
 .classpath
 .vscode/
 .env
-
+.idea/*
 .access
 .botId
 target/*.jar
