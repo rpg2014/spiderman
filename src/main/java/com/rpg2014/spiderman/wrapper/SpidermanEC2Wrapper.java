@@ -142,7 +142,7 @@ public class SpidermanEC2Wrapper {
             if (result.getSnapshots().size() > 1) {
                 finishedSnapshots = result.getSnapshots().stream().filter(snapshot -> snapshot.getProgress().contains("100")).collect(Collectors.toList());
             }
-        }while(result.getSnapshots().size()>1 && finishedSnapshots.size() == result.getSnapshots().size());
+        }while(result.getSnapshots().size() != 1 && finishedSnapshots.size() != result.getSnapshots().size());
 
 
     }
