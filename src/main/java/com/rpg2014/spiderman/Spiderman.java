@@ -41,7 +41,7 @@ public class Spiderman{
             server.createContext("/requests", new SpidermanHandler());
             server.createContext("/quotes",new SpidermanQuotePageHandler());
             server.createContext("/help", new SpidermanHelpPageHandler());
-            server.createContext("/discord",new IronSpiderHandler());
+            //server.createContext("/discord",new IronSpiderHandler());
             server.setExecutor(null); // creates a default executor
             server.start();
             }catch (IOException e ){
