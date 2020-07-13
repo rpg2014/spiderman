@@ -39,7 +39,7 @@ public class Spiderman{
             logger.logInfo("Starting Http server on port "+portNum,className);
             server = HttpServer.create(new InetSocketAddress(portNum), 0);
             server.createContext("/requests", new SpidermanHandler());
-            server.createContext("/quotes",new SpidermanQuotePageHandler());
+//            server.createContext("/quotes",new SpidermanQuotePageHandler());
             server.createContext("/help", new SpidermanHelpPageHandler());
             //server.createContext("/discord",new IronSpiderHandler());
             server.setExecutor(null); // creates a default executor

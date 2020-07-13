@@ -87,27 +87,27 @@ public class SpidermanCommandRunner {
 			}
 
 			break;
-		case QUOTE:
-			if (commandEntry.getValue().size() == 0) {
-				response = getRandomQuote();
-			} else if (commandEntry.getValue().size() == 1) {
-				response = getRandomQuote(commandEntry.getValue().get(0));
-			} else if (commandEntry.getValue().size() == 2) {
-				response = getQuote(commandEntry.getValue().get(0), commandEntry.getValue().get(1));
-			} else {
-				response = new GroupMeResponse("Invalid args, try \"quote: name , keyword\"");
-			}
-			break;
-		case ADD_QUOTE:
-			if (commandEntry.getValue().size() != 2) {
-				response = new GroupMeResponse("Invalid args, do \"add quote: name, quote");
-			} else {
-				response = addQuote(commandEntry.getValue().get(0), commandEntry.getValue().get(1));
-			}
-			break;
-		case QUOTE_LINK:
-			response = getQuoteLink();
-			break;
+//		case QUOTE:
+//			if (commandEntry.getValue().size() == 0) {
+//				response = getRandomQuote();
+//			} else if (commandEntry.getValue().size() == 1) {
+//				response = getRandomQuote(commandEntry.getValue().get(0));
+//			} else if (commandEntry.getValue().size() == 2) {
+//				response = getQuote(commandEntry.getValue().get(0), commandEntry.getValue().get(1));
+//			} else {
+//				response = new GroupMeResponse("Invalid args, try \"quote: name , keyword\"");
+//			}
+//			break;
+//		case ADD_QUOTE:
+//			if (commandEntry.getValue().size() != 2) {
+//				response = new GroupMeResponse("Invalid args, do \"add quote: name, quote");
+//			} else {
+//				response = addQuote(commandEntry.getValue().get(0), commandEntry.getValue().get(1));
+//			}
+//			break;
+//		case QUOTE_LINK:
+//			response = getQuoteLink();
+//			break;
 		case DAD_JOKE:
 			response = getDadJoke();
 			break;

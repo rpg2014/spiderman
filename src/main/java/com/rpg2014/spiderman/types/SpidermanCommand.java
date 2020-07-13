@@ -12,11 +12,11 @@ public enum SpidermanCommand{
     SIZE(),
     HELP(),
     CREATE(),
-    ADD_QUOTE(),
+//    ADD_QUOTE(),
     RPS(),
-    PORN(),
-    QUOTE_LINK(),
-    QUOTE();
+    PORN();// ,
+//    QUOTE_LINK(),
+//    QUOTE();
 
 
 
