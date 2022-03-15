@@ -148,6 +148,7 @@ public class SpidermanHandler implements HttpHandler {
 			httpResponse = httpclient.execute(post);
 
 			logger.logInfo("GM response: " + httpResponse.getStatusLine(), className);
+			logger.logInfo("GM response body: " + httpResponse.getEntity().toString(), className);
 			
 			HttpEntity entity2 = httpResponse.getEntity();
 			// do something useful with the response body
